@@ -2290,6 +2290,8 @@ See t/subclass.pl for how it works in practice.
 Study the sample code in L<CGI::Snapp::Demo::Four>, which shows how to supply a L<Config::Plugin::Tiny> *.ini file to configure the logger via the wrapper class
 L<CGI::Snapp::Demo::Four::Wrapper>.
 
+Also, see any test script, e.g. t/basic.pl.
+
 =head2 So, should I upgrade from CGI::Application to CGI::Snapp?
 
 Well, that's up to you. Of course, if your code is not broken, don't fix it. But, as I said above, L<CGI::Snapp> will be going in to production in my work.
@@ -2334,7 +2336,8 @@ Then, in your methods, just use:
 
 	$self -> log(debug => 'A string');
 
-The entry to each method in CGI::Snapp and L<CGI::Snapp::Dispatch> is logged using this technique.
+The entry to each method in CGI::Snapp and L<CGI::Snapp::Dispatch> is logged using this technique,
+although only when maxlevel is 'debug'. Lower levels for maxlevel do not trigger logging.
 See the source for details.
 
 =item o The system Perl 'v' perlbrew

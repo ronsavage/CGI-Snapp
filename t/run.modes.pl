@@ -6,6 +6,8 @@ use CGI;
 
 use CGI::Snapp::RunModes;
 
+use Log::Handler;
+
 use Test::More tests => 11;
 
 use Try::Tiny;
@@ -15,9 +17,21 @@ use Try::Tiny;
 sub test_1
 {
 	# Test 1. Various.
-	# Set debug so CGI::Snapp itself outputs log messages.
 
-	my($app)         = CGI::Snapp::RunModes -> new(maxlevel => 'debug', send_output => 0);
+	my($logger) = Log::Handler -> new;
+
+	$logger -> add
+		(
+		 screen =>
+		 {
+			 maxlevel       => 'debug',
+			 message_layout => '%m',
+			 minlevel       => 'error',
+			 newline        => 1, # When running from the command line.
+		 }
+		);
+
+	my($app)         = CGI::Snapp::RunModes -> new(logger => $logger, send_output => 0);
 	my($mode_source) = 'r_m';
 	my($run_mode)    = 'first_r_m';
 
@@ -49,9 +63,21 @@ sub test_1
 sub test_2
 {
 	# Test 2. Check a run mode of 0 works.
-	# Set debug so CGI::Snapp itself outputs log messages.
 
-	my($app)         = CGI::Snapp::RunModes -> new(maxlevel => 'debug', send_output => 0);
+	my($logger) = Log::Handler -> new;
+
+	$logger -> add
+		(
+		 screen =>
+		 {
+			 maxlevel       => 'debug',
+			 message_layout => '%m',
+			 minlevel       => 'error',
+			 newline        => 1, # When running from the command line.
+		 }
+		);
+
+	my($app)         = CGI::Snapp::RunModes -> new(logger => $logger, send_output => 0);
 	my($mode_source) = 'rr_mm';
 	my($run_mode)    = 0;
 
@@ -72,9 +98,21 @@ sub test_2
 sub test_3
 {
 	# Test 3. Check set and get run modes; preserving start. C.f. test 4.
-	# Set debug so CGI::Snapp itself outputs log messages.
 
-	my($app)         = CGI::Snapp::RunModes -> new(maxlevel => 'debug', send_output => 0);
+	my($logger) = Log::Handler -> new;
+
+	$logger -> add
+		(
+		 screen =>
+		 {
+			 maxlevel       => 'debug',
+			 message_layout => '%m',
+			 minlevel       => 'error',
+			 newline        => 1, # When running from the command line.
+		 }
+		);
+
+	my($app)         = CGI::Snapp::RunModes -> new(logger => $logger, send_output => 0);
 	my($mode_source) = 'rr_mm';
 	my($run_mode)    = 'first_r_m';
 
@@ -96,9 +134,21 @@ sub test_3
 sub test_4
 {
 	# Test 4. Check set and get run modes; replacing start. C.f. test 3.
-	# Set debug so CGI::Snapp itself outputs log messages.
 
-	my($app)         = CGI::Snapp::RunModes -> new(maxlevel => 'debug', send_output => 0);
+	my($logger) = Log::Handler -> new;
+
+	$logger -> add
+		(
+		 screen =>
+		 {
+			 maxlevel       => 'debug',
+			 message_layout => '%m',
+			 minlevel       => 'error',
+			 newline        => 1, # When running from the command line.
+		 }
+		);
+
+	my($app)         = CGI::Snapp::RunModes -> new(logger => $logger, send_output => 0);
 	my($mode_source) = 'rm';
 	my($run_mode)    = 'second_rm';
 	my(%run_modes)   = (one => 'one_rm', $run_mode => 'second_sub');
@@ -125,9 +175,21 @@ sub test_4
 sub test_5
 {
 	# Test 5. Test the AUTOLOAD option.
-	# Set debug so CGI::Snapp itself outputs log messages.
 
-	my($app) = CGI::Snapp::RunModes -> new(maxlevel => 'debug', send_output => 0);
+	my($logger) = Log::Handler -> new;
+
+	$logger -> add
+		(
+		 screen =>
+		 {
+			 maxlevel       => 'debug',
+			 message_layout => '%m',
+			 minlevel       => 'error',
+			 newline        => 1, # When running from the command line.
+		 }
+		);
+
+	my($app) = CGI::Snapp::RunModes -> new(logger => $logger, send_output => 0);
 
 	$app -> query -> param(rm => 'runner_bean');
 	$app -> run_modes(AUTOLOAD => 'autoload_sub');
@@ -143,9 +205,21 @@ sub test_5
 sub test_6
 {
 	# Test 6: Set the run mode to a method which croaks, so as to trigger a call to error_mode.
-	# Set debug so CGI::Snapp itself outputs log messages.
 
-	my($app)      = CGI::Snapp::RunModes -> new(maxlevel => 'debug', send_output => 0);
+	my($logger) = Log::Handler -> new;
+
+	$logger -> add
+		(
+		 screen =>
+		 {
+			 maxlevel       => 'debug',
+			 message_layout => '%m',
+			 minlevel       => 'error',
+			 newline        => 1, # When running from the command line.
+		 }
+		);
+
+	my($app)      = CGI::Snapp::RunModes -> new(logger => $logger, send_output => 0);
 	my($run_mode) = 'third_rm';
 
 	$app -> add_callback('error', 'error_hook_sub');
@@ -165,9 +239,21 @@ sub test_6
 sub test_7
 {
 	# Test 7: Call mode_param(\&sub).
-	# Set debug so CGI::Snapp itself outputs log messages.
 
-	my($app)      = CGI::Snapp::RunModes -> new(maxlevel => 'debug', send_output => 0);
+	my($logger) = Log::Handler -> new;
+
+	$logger -> add
+		(
+		 screen =>
+		 {
+			 maxlevel       => 'debug',
+			 message_layout => '%m',
+			 minlevel       => 'error',
+			 newline        => 1, # When running from the command line.
+		 }
+		);
+
+	my($app)      = CGI::Snapp::RunModes -> new(logger => $logger, send_output => 0);
 	my($run_mode) = 'fourth_rm';
 
 	$app -> query -> param('mode_param_sub_rm' => $run_mode);
@@ -185,11 +271,23 @@ sub test_7
 sub test_8
 {
 	# Test 8: Call mode_param(path_info => $integer).
-	# Set debug so CGI::Snapp itself outputs log messages.
+
+	my($logger) = Log::Handler -> new;
+
+	$logger -> add
+		(
+		 screen =>
+		 {
+			 maxlevel       => 'debug',
+			 message_layout => '%m',
+			 minlevel       => 'error',
+			 newline        => 1, # When running from the command line.
+		 }
+		);
 
 	my($run_mode)   = 'fifth_rm';
 	$ENV{PATH_INFO} = "$run_mode/sixth_rm";
-	my($app)        = CGI::Snapp::RunModes -> new(maxlevel => 'debug', send_output => 0);
+	my($app)        = CGI::Snapp::RunModes -> new(logger => $logger, send_output => 0);
 
 	$app -> mode_param(path_info => 1);
 	$app -> run_modes($run_mode => 'fifth_sub', sixth_rm => 'sixth_sub');
@@ -218,9 +316,21 @@ sub test_8
 sub test_9
 {
 	# Test 9: Call prerun_mode() at the wrong time, and so croak.
-	# Set debug so CGI::Snapp itself outputs log messages.
 
-	my($app) = CGI::Snapp::RunModes -> new(maxlevel => 'debug', send_output => 0);
+	my($logger) = Log::Handler -> new;
+
+	$logger -> add
+		(
+		 screen =>
+		 {
+			 maxlevel       => 'debug',
+			 message_layout => '%m',
+			 minlevel       => 'error',
+			 newline        => 1, # When running from the command line.
+		 }
+		);
+
+	my($app) = CGI::Snapp::RunModes -> new(logger => $logger, send_output => 0);
 
 	$app -> query -> param(rm => 'start');
 	$app -> run_modes(start => 'eighth_sub');
@@ -249,9 +359,21 @@ sub test_9
 sub test_10
 {
 	# Test 10: Test use of nested try/catch in _generate_output() by croaking within a error mode method.
-	# Set debug so CGI::Snapp itself outputs log messages.
 
-	my($app)      = CGI::Snapp::RunModes -> new(maxlevel => 'debug', send_output => 0);
+	my($logger) = Log::Handler -> new;
+
+	$logger -> add
+		(
+		 screen =>
+		 {
+			 maxlevel       => 'debug',
+			 message_layout => '%m',
+			 minlevel       => 'error',
+			 newline        => 1, # When running from the command line.
+		 }
+		);
+
+	my($app)      = CGI::Snapp::RunModes -> new(logger => $logger, send_output => 0);
 	my($run_mode) = 'rm';
 
 	$app -> error_mode('faulty_error_mode_sub');
@@ -283,9 +405,21 @@ sub test_10
 sub test_11
 {
 	# Test 11. Set run mode to a non-existant method.
-	# Set debug so CGI::Snapp itself outputs log messages.
 
-	my($app)      = CGI::Snapp::RunModes -> new(maxlevel => 'debug', send_output => 0);
+	my($logger) = Log::Handler -> new;
+
+	$logger -> add
+		(
+		 screen =>
+		 {
+			 maxlevel       => 'debug',
+			 message_layout => '%m',
+			 minlevel       => 'error',
+			 newline        => 1, # When running from the command line.
+		 }
+		);
+
+	my($app)      = CGI::Snapp::RunModes -> new(logger => $logger, send_output => 0);
 	my($run_mode) = 'runner_bean';
 
 	$app -> query -> param(rm => $run_mode);

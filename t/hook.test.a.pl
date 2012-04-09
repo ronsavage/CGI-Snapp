@@ -6,13 +6,26 @@ use CGI;
 
 use CGI::Snapp::HookTestA;
 
+use Log::Handler;
+
 # ------------------------------------------------
 
 sub test_1
 {
-	# Set debug so CGI::Snapp itself outputs log messages.
+	my($logger) = Log::Handler -> new;
 
-	my($app)         = CGI::Snapp::HookTestA -> new(maxlevel => 'debug', send_output => 0);
+	$logger -> add
+		(
+		 screen =>
+		 {
+			 maxlevel       => 'debug',
+			 message_layout => '%m',
+			 minlevel       => 'error',
+			 newline        => 1, # When running from the command line.
+		 }
+		);
+
+	my($app)         = CGI::Snapp::HookTestA -> new(logger => $logger, send_output => 0);
 	my($mode_source) = 'rm';
 	my($run_mode)    = 'start_sub';
 	my(%run_modes)   = $app -> run_modes;

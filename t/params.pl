@@ -4,12 +4,27 @@ use warnings;
 
 use CGI::Snapp;
 
+use Log::Handler;
+
 use Test::More;
 
 # ------------------------------------------------
 
+my($logger) = Log::Handler -> new;
+
+$logger -> add
+	(
+	 screen =>
+	 {
+		 maxlevel       => 'debug',
+		 message_layout => '%m',
+		 minlevel       => 'error',
+		 newline        => 1, # When running from the command line.
+	 }
+	);
+
 my($count) = 0;
-my($app)   = CGI::Snapp -> new(maxlevel => 'debug', send_output => 0);
+my($app)   = CGI::Snapp -> new(logger => $logger, send_output => 0);
 
 # Get the default params, of which there are none.
 

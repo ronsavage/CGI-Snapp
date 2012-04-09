@@ -4,15 +4,28 @@ use warnings;
 
 use CGI::Snapp::Overrides;
 
+use Log::Handler;
+
 use Test::More;
 
 # ------------------------------------------------
 
 sub test_a
 {
-	# Set debug so CGI::Snapp itself outputs log messages.
+	my($logger) = Log::Handler -> new;
 
-	my($app)    = CGI::Snapp::Overrides -> new(maxlevel => 'debug', send_output => 0);
+	$logger -> add
+		(
+		 screen =>
+		 {
+			 maxlevel       => 'debug',
+			 message_layout => '%m',
+			 minlevel       => 'error',
+			 newline        => 1, # When running from the command line.
+		 }
+		);
+
+	my($app)    = CGI::Snapp::Overrides -> new(logger => $logger, send_output => 0);
 	my($output) = $app -> run;
 
 	ok($output =~ /Query parameters.+Query environment/s, 'run() produced the correct output');

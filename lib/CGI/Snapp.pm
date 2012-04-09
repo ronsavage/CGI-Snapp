@@ -2317,6 +2317,7 @@ If that doesn't work, you're in b-i-g trouble. Keep reading for suggestions as t
 Pass a logger to your sub-class of L<CGI::Snapp> like this:
 
 	my($logger) = Log::Handler -> new;
+
 	$logger -> add
 		(
 		 screen =>

@@ -4,12 +4,26 @@ use warnings;
 use CGI;
 use CGI::Snapp;
 
+use Log::Handler;
+
 use Test::More tests => 4;
 
 # ------------------------------------------------
-# Set debug so CGI::Snapp itself outputs log messages.
 
-my($app) = CGI::Snapp -> new(maxlevel => 'debug', QUERY => CGI -> new, send_output => 0);
+my($logger) = Log::Handler -> new;
+
+$logger -> add
+	(
+	 screen =>
+	 {
+		 maxlevel       => 'debug',
+		 message_layout => '%m',
+		 minlevel       => 'error',
+		 newline        => 1, # When running from the command line.
+	 }
+	);
+
+my($app) = CGI::Snapp -> new(logger => $logger, QUERY => CGI -> new, send_output => 0);
 
 isa_ok($app, 'CGI::Snapp');
 
@@ -19,7 +33,7 @@ $app -> query -> param(rm => 'start');
 $app -> run_modes($modes);
 
 is_deeply({$app -> run_modes}, {%$modes, start => 'dump_html'}, 'Set/get run modes');
- 
+
 my($output) = $app -> run;
 
 ok(length($output) > 0, "Output from $0 is not empty");

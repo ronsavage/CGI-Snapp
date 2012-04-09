@@ -4,12 +4,27 @@ use warnings;
 
 use CGI::Snapp::SubClass;
 
+use Log::Handler;
+
 use Test::More;
 
 # ------------------------------------------------
 
+my($logger) = Log::Handler -> new;
+
+$logger -> add
+	(
+	 screen =>
+	 {
+		 maxlevel       => 'debug',
+		 message_layout => '%m',
+		 minlevel       => 'error',
+		 newline        => 1, # When running from the command line.
+	 }
+	);
+
 my($count) = 0;
-my($app)   = CGI::Snapp::SubClass -> new(maxlevel => 'debug', send_output => 0, verbose => 1);
+my($app)   = CGI::Snapp::SubClass -> new(logger => $logger, send_output => 0, verbose => 1);
 
 # Get the subclass's verbose value.
 

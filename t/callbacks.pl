@@ -4,17 +4,30 @@ use warnings;
 
 use CGI::Snapp::Callback;
 
+use Log::Handler;
+
 use Test::More;
 
 # ------------------------------------------------
 # The point of using Callback.pm instead of Snapp.pm is that the former
 # installs some hooked methods, which return the __PACKAGE__ variable
 # as part of their output, in a way that Snapp.pm's defaults subs don't.
-#
-# Set debug so CGI::Snapp itself outputs log messages.
+
+my($logger) = Log::Handler -> new;
+
+$logger -> add
+	(
+	 screen =>
+	 {
+		 maxlevel       => 'debug',
+		 message_layout => '%m',
+		 minlevel       => 'error',
+		 newline        => 1, # When running from the command line.
+	 }
+	);
 
 my($count) = 0;
-my($app)   = CGI::Snapp::Callback -> new(maxlevel => 'debug', send_output => 0);
+my($app)   = CGI::Snapp::Callback -> new(logger => $logger, send_output => 0);
 
 isa_ok($app, 'CGI::Snapp::Callback'); $count++;
 

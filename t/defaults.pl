@@ -1,14 +1,29 @@
 use strict;
 use warnings;
 
+use Log::Handler;
+
 use Test::More;
 
 # ------------------------------------------------
 
 BEGIN{ use_ok('CGI::Snapp'); }
 
+my($logger) = Log::Handler -> new;
+
+$logger -> add
+	(
+	 screen =>
+	 {
+		 maxlevel       => 'debug',
+		 message_layout => '%m',
+		 minlevel       => 'error',
+		 newline        => 1, # When running from the command line.
+	 }
+	);
+
 my($count) = 1; # Counting the use_ok above.
-my($app)   = CGI::Snapp -> new(maxlevel => 'debug'); # Not new(send_output => 0)!
+my($app)   = CGI::Snapp -> new(logger => $logger); # Not new(send_output => 0)!
 
 # Check defaults for various things. Note: run() has not been called.
 

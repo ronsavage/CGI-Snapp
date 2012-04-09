@@ -4,12 +4,26 @@ use warnings;
 
 use CGI::Snapp::Header;
 
+use Log::Handler;
+
 use Test::More tests => 16;
 
 # ------------------------------------------------
-# Set debug so CGI::Snapp itself outputs log messages.
 
-my($app) = CGI::Snapp::Header -> new(maxlevel => 'debug', send_output => 0);
+my($logger) = Log::Handler -> new;
+
+$logger -> add
+	(
+	 screen =>
+	 {
+		 maxlevel       => 'debug',
+		 message_layout => '%m',
+		 minlevel       => 'error',
+		 newline        => 1, # When running from the command line.
+	 }
+	);
+
+my($app) = CGI::Snapp::Header -> new(logger => $logger, send_output => 0);
 
 isa_ok($app, 'CGI::Snapp::Header');
 

@@ -3,13 +3,27 @@ use warnings;
 
 use CGI::Snapp;
 
+use Log::Handler;
+
 use Test::More tests => 4;
 
 # ------------------------------------------------
 # See also CGI::Snapp::Dispatch's t/psgi.args.t.
-# Set debug so CGI::Snapp itself outputs log messages.
 
-my($app) = CGI::Snapp -> psgi_app(maxlevel => 'debug');
+my($logger) = Log::Handler -> new;
+
+$logger -> add
+	(
+	 screen =>
+	 {
+		 maxlevel       => 'debug',
+		 message_layout => '%m',
+		 minlevel       => 'error',
+		 newline        => 1, # When running from the command line.
+	 }
+	);
+
+my($app) = CGI::Snapp -> psgi_app(logger => $logger);
 
 isa_ok($app, 'CODE');
 

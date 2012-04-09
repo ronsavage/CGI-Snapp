@@ -1,0 +1,10 @@
+Revision history for Perl extension CGI::Snapp.
+
+1.01  Sun Apr  8 10:40:00 2012
+	- Shift some code from run() into _determine_(cgi|psgi)_output().
+	- Add PSGI-specific code, sub as_psgi(), and make some changes to run() using $self -> _psgi().
+	- Add t/psgi.basic.pl.
+	- Also test via CGI::Snapp::Dispatch's t/psgi.args.t.
+
+1.00  Mon Feb 27 10:09:44 2012
+	- Original version

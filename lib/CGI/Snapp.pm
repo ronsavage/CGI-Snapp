@@ -18,8 +18,6 @@ fieldhash my %_error_mode       => '_error_mode';
 fieldhash my %_headers          => '_headers';
 fieldhash my %_header_type      => '_header_type';
 fieldhash my %logger            => 'logger';
-fieldhash my %maxlevel          => 'maxlevel';
-fieldhash my %minlevel          => 'minlevel';
 fieldhash my %_object_callbacks => '_object_callbacks';
 fieldhash my %PARAMS            => 'PARAMS';
 fieldhash my %_params           => '_params';
@@ -623,9 +621,7 @@ sub _init
 	$$arg{_error_mode}       = '';
 	$$arg{_headers}          = {};
 	$$arg{_header_type}      = 'header';
-	$$arg{logger}            ||= defined($$arg{logger}) ? $$arg{logger} : undef; # Caller can set.
-	$$arg{maxlevel}          ||= 'notice'; # Caller can set.
-	$$arg{minlevel}          ||= 'error';  # Caller can set.
+	$$arg{logger}            ||= ''; # Caller can set.
 	$$arg{_object_callbacks} = {};
 	$$arg{PARAMS}            ||= ''; # Caller can set.
 	$$arg{_params}           = {};
@@ -639,21 +635,6 @@ sub _init
 	$$arg{_start_mode}       = 'start';
 	$self                    = from_hash($self, $arg);
 	$myself                  = $self;
-
-	if (! defined $self -> logger)
-	{
-		$self -> logger(Log::Handler -> new);
-		$self -> logger -> add
-		(
-		 screen =>
-		 {
-			 maxlevel       => $self -> maxlevel,
-			 message_layout => '%m',
-			 minlevel       => $self -> minlevel,
-			 newline        => 1,
-		 }
-		);
-	}
 
 	$self -> _params($$arg{PARAMS}) if ($$arg{PARAMS} && (ref $$arg{PARAMS} eq 'HASH') );
 	$self -> _query($$arg{QUERY})   if ($$arg{QUERY});
@@ -1290,34 +1271,14 @@ Key-value pairs accepted in the parameter list (see corresponding methods for de
 
 Specify a logger compatible with L<Log::Handler>.
 
-Default: A logger of type L<Log::Handler> which writes to the screen, but is (of course) silent unless the 'maxlevel' parameter (below) is set appropriately.
+Default: '' (The empty string).
 
-To stop creation of a logger, just set 'logger' to the empty string (not undef).
+To clarify: The built-in calls to log() all use a log level of 'debug', so if your logger has 'maxlevel' set
+to anything less than 'debug', nothing nothing will get logged.
 
-To clarify: The built-in calls to log() all use a log level of 'debug', and, with the default value of 'maxlevel' set to
-'notice', nothing actually gets logged by default.
+'maxlevel' and 'minlevel' are discussed in L<Log::Handler#LOG-LEVELS> and L<Log::Handler::Levels>.
 
-Also, to use your own log object, see L</How do I use my own logger object?>.
-
-=item o maxlevel => $logOption1
-
-This option affects L<Log::Handler> objects.
-
-See L<Log::Handler#LOG-LEVELS> and L<Log::Handler::Levels>.
-
-Default: 'notice'.
-
-In the test files t/*.pl, you'll often see new() called as new(maxlevel => 'debug', send_output => 0), which actives debugging and stops output being sent to the HTTP client.
-
-=item o minlevel => $logOption2
-
-This option affects L<Log::Handler> objects.
-
-See L<Log::Handler#LOG-LEVELS> and L<Log::Handler::Levels>.
-
-Default: 'error'.
-
-No lower levels are used.
+Also, see L</How do I use my own logger object?> and L</Troubleshooting>.
 
 =item o PARAMS => $hashref
 
@@ -1673,39 +1634,17 @@ Returns nothing.
 
 So, the body of this method consists of this 1 line:
 
-	$self -> logger -> $level($string) if ($self -> logger);
-
-The default logger object is of type L<Log::Handler>, and, by default, nothing is logged (due to maxlevel being 'notice' and the code using $level eq 'debug').
+	$self -> logger -> $level($string) if ($self && $self -> logger);
 
 =head2 logger([$logger_object])
 
-Sets and gets the logger object.
+Sets and gets the logger object (of type L<Log::Handler>.
 
 Here, the [] indicate an optional parameter.
-
-To stop creation of a logger, just set 'logger' to the empty string (not undef), in the call to L</new()>.
 
 'logger' is a parameter to L</new()>. See L</Constructor and Initialization> for details.
 
-=head2 maxlevel([$string])
-
-Sets and gets the maximum log level as used by the logger object, which defaults to an object of type L<Log::Handler>.
-
-Here, the [] indicate an optional parameter.
-
-'maxlevel' is a parameter to L</new()>. See L</Constructor and Initialization> for details.
-
-See L<Log::Handler#LOG-LEVELS> and L<Log::Handler::Levels>.
-
-=head2 minlevel([$string])
-
-Sets and gets the minimum log level as used by the logger object, which defaults to an object of type L<Log::Handler>.
-
-Here, the [] indicate an optional parameter.
-
-'minlevel' is a parameter to L</new()>. See L</Constructor and Initialization> for details.
-
-See L<Log::Handler#LOG-LEVELS> and L<Log::Handler::Levels>.
+Also, see L</How do I use my own logger object?>.
 
 =head2 mode_param([@new_options])
 
@@ -2123,10 +2062,6 @@ The leading '_' on some CGI::Snapp method names means all such methods are for t
 
 =item o L</logger($logger_object)>
 
-=item o L</maxlevel($string)>
-
-=item o L</minlevel($string)>
-
 =item o L</send_output([$Boolean])>
 
 =back
@@ -2376,6 +2311,30 @@ Hmmm. Things to consider:
 shell> perl httpd/cgi-bin/cgi.snapp.one.cgi
 
 If that doesn't work, you're in b-i-g trouble. Keep reading for suggestions as to what to do next.
+
+=item o Did you try using a logger to trace the method calls?
+
+Pass a logger to your sub-class of L<CGI::Snapp> like this:
+
+	my($logger) = Log::Handler -> new;
+	$logger -> add
+		(
+		 screen =>
+		 {
+			 maxlevel       => 'debug',
+			 message_layout => '%m',
+			 minlevel       => 'error',
+			 newline        => 1, # When running from the command line.
+		 }
+		);
+	CGI::Snapp -> new(logger => $logger, ...) -> run;
+
+Then, in your methods, just use:
+
+	$self -> log(debug => 'A string');
+
+The entry to each method in CGI::Snapp and L<CGI::Snapp::Dispatch> is logged using this technique.
+See the source for details.
 
 =item o The system Perl 'v' perlbrew
 

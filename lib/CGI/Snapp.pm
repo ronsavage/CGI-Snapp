@@ -2305,6 +2305,97 @@ L<CGI::Snapp::Demo::Four::Wrapper>.
 
 Also, see any test script, e.g. t/basic.pl.
 
+=head2 What else do I need to know about logging?
+
+The effect of logging varies depending on the stage at which it is activated.
+
+And, your logger must be compatible with L<Log::Handler>.
+
+If you call your sub-class of CGI::Snapp as My::App -> new(logger => $logging), then logging is turned on at the
+earliest possible time. This means calls within L</new()>, to L</call_hook($hook, @args)> (which calls cgiapp_init() )
+and L</setup()>, are logged. And since you have probably overridden setup(), you can do this in your setup():
+
+	$self -> log($level => $message); # Log anything...
+
+Alternately, you could override L</cgiapp_init()> or L</cgiapp_prerun()>, and create your own logger object
+within one of those.
+
+Then you just do $self -> logger($my_logger), after which logging is immediately activated. But obviously that
+means the calls to call_hook() and setup() (in new() ) will not produce any log output, because by now they have
+already been run.
+
+Nevertheless, after this point (e.g. in cgiapp_init() ), since a logger is now set up, logging will produce output.
+
+Remember the prefix 'Local::Wines::Controller' mentioned in L<CGI::Snapp::Dispatch/PSGI Scripts>?
+
+Here's what it's cgiapp_prerun() looks like:
+
+	sub cgiapp_prerun
+	{
+		my($self) = @_;
+
+		# Can't call, since logger not yet set up.
+		# Well, could, but it's pointless...
+
+		#$self -> log(debug => 'cgiapp_prerun()');
+
+		$self -> param(config => Local::Config -> new(module_name => 'Local::Wines') -> get_config);
+		$self -> set_connector; # The dreaded DBIx::Connector.
+		$self -> logger(Local::Logger -> new(config => $self -> param('config') ) );
+
+		# Log the CGI form parameters.
+
+		my($q) = $self -> query;
+
+		$self -> log(info  => '');
+		$self -> log(info  => $q -> url(-full => 1, -path => 1) );
+		$self -> log(info  => "Param: $_: " . $q -> param($_) ) for $q -> param;
+
+		# Other controllers add their own run modes.
+
+		$self -> run_modes([qw/display/]);
+		$self -> log(debug => 'tmpl_path: ' . ${$self -> param('config')}{template_path});
+
+		# Set up the database, the templater and the viewer.
+		# We pass the templater into the viewer so all views share it.
+
+		# A newer design has the controller created in the db class.
+
+		$self -> param
+			(
+			 db => Local::Wines::Database -> new
+			 (
+			  dbh    => $self -> param('connector') -> dbh,
+			  logger => $self -> logger,
+			  query  => $q,
+			 )
+			);
+
+		$self -> param
+			(
+			 templater => Text::Xslate -> new
+			 (
+			  input_layer => '',
+			  path        => ${$self -> param('config')}{template_path},
+			 )
+			);
+
+		$self -> param
+			(
+			 view => Local::Wines::View -> new
+			 (
+			  db        => $self -> param('db'),
+			  logger    => $self -> logger,
+			  templater => $self -> param('templater'),
+			 )
+			);
+
+		# Output this here so we know how far we got.
+
+		$self -> log(info  => 'Session id: ' . $self -> param('db') -> session -> id);
+
+	} # End of cgiapp_prerun.
+
 =head2 So, should I upgrade from CGI::Application to CGI::Snapp?
 
 Well, that's up to you. Of course, if your code is not broken, don't fix it. But, as I said above, L<CGI::Snapp> will be going in to production in my work.

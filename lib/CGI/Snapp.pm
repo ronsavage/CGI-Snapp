@@ -1819,6 +1819,15 @@ Just let the code create the default query object, which will be of type L<CGI::
 
 L<CGI::Application> also provides sub run_as_psgi(), but we have no need of that.
 
+Note: This method psgi_app() is very similar to L<CGI::Snapp::Dispatch/as_psgi(@args)>, but the latter contains
+this line:
+
+	$app -> mode_param(sub {return $rm}) if ($rm);
+
+where the current method does not. This means L<CGI::Snapp::Dispatch> can determine a run mode from the path_info
+sent from the web client, whereas if you use psgi_app(), your sub-class of L<CGI::Snapp> must contain all the logic
+required to determine the run mode.
+
 =head2 query([$q])
 
 Sets and gets the L<CGI>-compatible object used to retrieve the CGI form field names and values. This object also needs to be able to generate HTTP headers. See L</header_props([@headers])>.

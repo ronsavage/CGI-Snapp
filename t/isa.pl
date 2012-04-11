@@ -1,13 +1,13 @@
 use strict;
 use warnings;
 
+use CGI::Snapp;
+
 use Test::More;
 
 # ------------------------------------------------
 
-BEGIN{ use_ok('CGI::Snapp'); }
-
-my($count) = 1; # Counting the use_ok above.
+my($count) = 0;
 
 isa_ok(CGI::Snapp -> new(send_output => 0), 'CGI::Snapp'); $count++;
 

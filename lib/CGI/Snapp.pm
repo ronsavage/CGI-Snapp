@@ -2465,7 +2465,7 @@ The following are all part of this set of distros:
 
 L<CGI::Snapp> - A almost back-compat fork of CGI::Application
 
-L<CGI::Snapp::Dispatch> - Dispatch requests to CGI::Snapp-based objects
+L<CGI::Snapp::Dispatch> and L<CGI::Snapp::Dispatch::Regexp> - Dispatch requests to CGI::Snapp-based objects
 
 L<CGI::Snapp::Plugin::Forward> - A plugin for CGI::Snapp to switch cleanly to another run mode within the same app
 

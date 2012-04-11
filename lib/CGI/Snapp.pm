@@ -1819,12 +1819,12 @@ Just let the code create the default query object, which will be of type L<CGI::
 
 L<CGI::Application> also provides sub run_as_psgi(), but we have no need of that.
 
-Note: This method psgi_app() is very similar to L<CGI::Snapp::Dispatch/as_psgi(@args)>, but the latter contains
-this line:
+Note: This method, psgi_app(), is very similar to L<CGI::Snapp::Dispatch/as_psgi(@args)>, but the latter contains
+this line (amongst other logic):
 
 	$app -> mode_param(sub {return $rm}) if ($rm);
 
-where the current method does not. This means L<CGI::Snapp::Dispatch> can determine a run mode from the path_info
+where the current method does not. This means L<CGI::Snapp::Dispatch> can determine the run mode from the path info
 sent from the web client, whereas if you use psgi_app(), your sub-class of L<CGI::Snapp> must contain all the logic
 required to determine the run mode.
 
@@ -1977,6 +1977,10 @@ In particular, you are I<strongly> encouraged to read L<the Data::Session FAQ|ht
 L<the Data::Session Troubleshooting guidelines|https://metacpan.org/module/Data::Session#Troubleshooting> before writing your own teardown() method.
 
 =head1 FAQ
+
+=head2 Does CGI::Snapp V 1.01 support PSGI?
+
+Yes. See L</psgi_app()> and L<CGI::Snapp::Dispatch>.
 
 =head2 Is there any sample code?
 

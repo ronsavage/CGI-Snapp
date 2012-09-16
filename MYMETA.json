@@ -22,7 +22,7 @@
       },
       "configure" : {
          "requires" : {
-            "Module::Build" : "0.38"
+            "Module::Build" : "0.340201"
          }
       },
       "runtime" : {

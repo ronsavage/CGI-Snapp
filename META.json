@@ -4,7 +4,7 @@
       "Ron Savage <ron@savage.net.au>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.4, CPAN::Meta::Converter version 2.120630",
+   "generated_by" : "Module::Build version 0.4003, CPAN::Meta::Converter version 2.120630",
    "license" : [
       "artistic_1"
    ],
@@ -22,12 +22,13 @@
       },
       "configure" : {
          "requires" : {
-            "Module::Build" : "0.38"
+            "Module::Build" : "0.340201"
          }
       },
       "runtime" : {
          "requires" : {
             "CGI" : "3.59",
+            "CGI::PSGI" : "0.15",
             "CGI::Simple" : "1.113",
             "Capture::Tiny" : "0.16",
             "Carp" : "1.2",

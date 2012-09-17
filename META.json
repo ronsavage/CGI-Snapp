@@ -22,7 +22,7 @@
       },
       "configure" : {
          "requires" : {
-            "Module::Build" : "0.340201"
+            "Module::Build" : "0"
          }
       },
       "runtime" : {
@@ -48,7 +48,7 @@
    "provides" : {
       "CGI::Snapp" : {
          "file" : "lib/CGI/Snapp.pm",
-         "version" : "1.01"
+         "version" : "1.02"
       }
    },
    "release_status" : "stable",
@@ -57,5 +57,5 @@
          "http://opensource.org/licenses/artistic-license.php"
       ]
    },
-   "version" : "1.01"
+   "version" : "1.02"
 }

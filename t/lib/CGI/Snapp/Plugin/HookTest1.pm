@@ -6,7 +6,7 @@ use vars '@EXPORT';
 
 @EXPORT = (qw/init_sub_1_1 init_sub_1_2/);
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 # --------------------------------------------------
 

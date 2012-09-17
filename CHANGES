@@ -1,5 +1,10 @@
 Revision history for Perl extension CGI::Snapp.
 
+1.02  Mon Sep 17 11:38::00 2012
+	- Add CGI::PSGI to the pre-reqs (Andreas Koenig).
+	- Change - in Build.PL - configure_requires{Module::Build} from 0.3800 to 0, after adapting advice from
+		 Andreas Koenig.
+
 1.01  Sun Apr  8 10:40:00 2012
 	- Shift some code from run() into _determine_(cgi|psgi)_output().
 	- Add PSGI-specific code, sub as_psgi(), and make some changes to run() using $self -> _psgi().

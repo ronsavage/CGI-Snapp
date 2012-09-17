@@ -13,7 +13,7 @@ build_requires =>
 },
 configure_requires =>
 {
-	Module::Build => 0.340201,
+	Module::Build => 0,
 },
 requires =>
 {

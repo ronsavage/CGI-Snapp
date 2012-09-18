@@ -1607,11 +1607,12 @@ Just before the method associated with $run_mode is invoked, the current run mod
 methods attached to the hook 'forward_prerun' are called.
 
 Calling this hook gives you the opportunity of making any preparations you wish before the new run mode is entered.
-See t/forward.t and t/lib/CGI/Snapp/ForwardTest.pm for sample code.
 
 Finally, $run_mode's method is called.
 
 Returns the output of the $run_mode's method.
+
+See t/forward.t and t/lib/CGI/Snapp/ForwardTest.pm for sample code.
 
 If you wish to interrupt the current request, and redirect to an external url, then the
 L</redirect($url[, $status])> method is probably what you want.

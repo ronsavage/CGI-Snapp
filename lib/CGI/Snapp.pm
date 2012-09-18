@@ -31,13 +31,14 @@ fieldhash my %send_output       => 'send_output';
 fieldhash my %_start_mode       => '_start_mode';
 
 my(%class_callbacks) =
-	(
-	 error    => {},
-	 init     => {'CGI::Snapp' => ['cgiapp_init']},
-	 prerun   => {'CGI::Snapp' => ['cgiapp_prerun']},
-	 postrun  => {'CGI::Snapp' => ['cgiapp_postrun']},
-	 teardown => {'CGI::Snapp' => ['teardown']},
-	);
+(
+	error          => {},
+	forward_prerun => {},
+	init           => {'CGI::Snapp' => ['cgiapp_init']},
+	prerun         => {'CGI::Snapp' => ['cgiapp_prerun']},
+	postrun        => {'CGI::Snapp' => ['cgiapp_postrun']},
+	teardown       => {'CGI::Snapp' => ['teardown']},
+);
 
 my($myself);
 
@@ -441,6 +442,21 @@ sub error_mode
 	return $self -> _error_mode;
 
 } # End of error_mode.
+
+# --------------------------------------------------
+
+sub forward
+{
+	my($self, $run_mode, @args) = @_;
+	$run_mode = defined $run_mode ? $run_mode : '';
+
+	$self -> log(debug => "forward($run_mode, ...)");
+	$self -> _current_run_mode($run_mode);
+	$self -> call_hook('forward_prerun');
+
+	return $self -> _generate_output(@args);
+
+} # End of forward.
 
 # --------------------------------------------------
 
@@ -861,6 +877,37 @@ sub query
 
 # --------------------------------------------------
 
+sub redirect
+{
+	my($self, $url, $status) = @_;
+	$url    ||= '';
+	$status ||= 0;
+
+	$self -> log(debug => "redirect($url, ...)");
+
+	# If we're in the prerun phase, generate a no-op via a dummy sub.
+
+	if ($self -> _prerun_mode_lock == 0)
+	{
+		$self -> run_modes(dummy_redirect => sub{});
+		$self -> prerun_mode('dummy_redirect');
+	}
+
+	if ($status)
+	{
+		$self -> header_add(-location => $url, -status => $status);
+	}
+	else
+	{
+		$self -> header_add(-location => $url);
+	}
+
+	$self -> header_type('redirect');
+
+} # End of redirect.
+
+# --------------------------------------------------
+
 sub run
 {
 	my($self) = @_;
@@ -1174,11 +1221,12 @@ Here's the default set of hooks aka (default) dispatch table. It's just a hash w
 
 	my(%class_callback) =
 	(
-	error    => {},
-	init     => {'CGI::Snapp' => ['cgiapp_init']},
-	prerun   => {'CGI::Snapp' => ['cgiapp_prerun']},
-	postrun  => {'CGI::Snapp' => ['cgiapp_postrun']},
-	teardown => {'CGI::Snapp' => ['teardown']},
+	error          => {},
+	forward_prerun => {},
+	init           => {'CGI::Snapp' => ['cgiapp_init']},
+	prerun         => {'CGI::Snapp' => ['cgiapp_prerun']},
+	postrun        => {'CGI::Snapp' => ['cgiapp_postrun']},
+	teardown       => {'CGI::Snapp' => ['teardown']},
 	);
 
 An explanation:
@@ -1548,6 +1596,26 @@ Default: ''.
 
 Returns the current error mode method name.
 
+=head2 forward($run_mode[, @args])
+
+Switches from the current run mode to the given $run_mode, passing the optional @args.
+
+For this to work, you must have previously called $self -> run_modes($run_mode => 'some_method'), so the code
+knows which method it must call.
+
+Just before the method associated with $run_mode is invoked, the current run mode is set to $run_mode, and any
+methods attached to the hook 'forward_prerun' are called.
+
+Calling this hook gives you the opportunity of making any preparations you wish before the new run mode is entered.
+See t/forward.t and t/lib/CGI/Snapp/ForwardTest.pm for sample code.
+
+Finally, $run_mode's method is called.
+
+Returns the output of the $run_mode's method.
+
+If you wish to interrupt the current request, and redirect to an external url, then the
+L</redirect($url[, $status])> method is probably what you want.
+
 =head2 get_current_runmode()
 
 Returns the name of the current run mode.
@@ -1835,6 +1903,29 @@ Sets and gets the L<CGI>-compatible object used to retrieve the CGI form field n
 Here, the [] indicate an optional parameter.
 
 Alternately, you can pass in such an object via the 'QUERY' parameter to L</new()>.
+
+=head2 redirect($url[, $status])
+
+Interrupts the current request, and redirects to the given (external) $url, optionally setting the HTTP status to $status.
+
+Here, the [] indicate an optional parameter.
+
+The redirect happens even if you are inside a method attached to the 'prerun' hook when you call redirect().
+
+Specifically, this method does these 3 things:
+
+=over 4
+
+=item o Sets the HTTP header 'location' to the given $url
+
+=item o Sets the HTTP 'status' (if provided) to $status
+
+=item o Sets the L<CGI::Snapp> header type to 'redirect'
+
+=back
+
+If you just want to display the results of another run mode within the same application, then the
+L</forward($run_mode[, @args])> method is probably what you want.
 
 =head2 run()
 

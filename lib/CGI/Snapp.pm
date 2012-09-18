@@ -1598,7 +1598,7 @@ Returns the current error mode method name.
 
 =head2 forward($run_mode[, @args])
 
-Switches from the current run mode to the given $run_mode, passing the optional @args.
+Switches from the current run mode to the given $run_mode, passing the optional @args to the new mode's method.
 
 For this to work, you must have previously called $self -> run_modes($run_mode => 'some_method'), so the code
 knows which method it must call.
@@ -1608,7 +1608,7 @@ methods attached to the hook 'forward_prerun' are called.
 
 Calling this hook gives you the opportunity of making any preparations you wish before the new run mode is entered.
 
-Finally, $run_mode's method is called.
+Finally, $run_mode's method is called, using @args as its arguments.
 
 Returns the output of the $run_mode's method.
 

@@ -1924,6 +1924,8 @@ Specifically, this method does these 3 things:
 
 =back
 
+See t/redirect.t and t/lib/CGI/Snapp/RedirectTest.pm for sample code.
+
 If you just want to display the results of another run mode within the same application, then the
 L</forward($run_mode[, @args])> method is probably what you want.
 

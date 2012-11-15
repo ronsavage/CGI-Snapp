@@ -4,7 +4,7 @@ use parent 'CGI::Snapp';
 use strict;
 use warnings;
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 # --------------------------------------------------
 

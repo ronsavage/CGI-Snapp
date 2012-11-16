@@ -208,13 +208,13 @@ sub test_h
 my($runner) = CGI::Snapp::RunScript -> new;
 my($count)  = 0;
 
-$count += test_a($runner, File::Spec -> catdir('t', 'hook.test.a.pl') );
-$count += test_b($runner, File::Spec -> catdir('t', 'hook.test.b.pl') );
-$count += test_c($runner, File::Spec -> catdir('t', 'hook.test.c.pl') );
-$count += test_d($runner, File::Spec -> catdir('t', 'hook.test.d.pl') );
-$count += test_e($runner, File::Spec -> catdir('t', 'hook.test.a.pl') );
-$count += test_f($runner, File::Spec -> catdir('t', 'hook.test.b.pl') );
-$count += test_g($runner, File::Spec -> catdir('t', 'hook.test.c.pl') );
-$count += test_h($runner, File::Spec -> catdir('t', 'hook.test.d.pl') );
+$count += test_a($runner, File::Spec -> catfile('t', 'hook.test.a.pl') );
+$count += test_b($runner, File::Spec -> catfile('t', 'hook.test.b.pl') );
+$count += test_c($runner, File::Spec -> catfile('t', 'hook.test.c.pl') );
+$count += test_d($runner, File::Spec -> catfile('t', 'hook.test.d.pl') );
+$count += test_e($runner, File::Spec -> catfile('t', 'hook.test.a.pl') );
+$count += test_f($runner, File::Spec -> catfile('t', 'hook.test.b.pl') );
+$count += test_g($runner, File::Spec -> catfile('t', 'hook.test.c.pl') );
+$count += test_h($runner, File::Spec -> catfile('t', 'hook.test.d.pl') );
 
 done_testing($count);

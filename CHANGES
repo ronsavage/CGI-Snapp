@@ -1,5 +1,9 @@
 Revision history for Perl extension CGI::Snapp.
 
+1.03  Sat Nov 17 10:31:00 2012
+	- Use File::Spec -> catfile('t', 'x.pl') instead of 't/x.pl' in tests.
+		This should solve RT#81241 reported by CHORNY under MS Windows.
+
 1.02  Mon Sep 17 11:38:00 2012
 	- Add CGI::PSGI to the pre-reqs (Andreas Koenig).
 	- Change (in Build.PL) configure_requires{Module::Build} from 0.3800 to 0, after adapting advice from

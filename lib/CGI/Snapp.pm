@@ -42,7 +42,7 @@ my(%class_callbacks) =
 
 my($myself);
 
-our $VERSION = '1.02';
+our $VERSION = '1.03';
 
 # --------------------------------------------------
 

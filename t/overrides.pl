@@ -39,6 +39,6 @@ sub test_a
 my($runner) = CGI::Snapp::RunScript -> new;
 my($count)  = 0;
 
-$count += test_a($runner, File::Spec -> catdir('t', 'override.a.pl') );
+$count += test_a($runner, File::Spec -> catfile('t', 'override.a.pl') );
 
 done_testing($count);

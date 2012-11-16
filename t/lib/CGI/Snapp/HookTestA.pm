@@ -12,7 +12,7 @@ use warnings;
 use CGI::Snapp::Plugin::HookTest1;
 use CGI::Snapp::Plugin::HookTest2;
 
-our $VERSION = '1.02';
+our $VERSION = '1.03';
 
 # --------------------------------------------------
 

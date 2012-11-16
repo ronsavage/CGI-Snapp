@@ -55,7 +55,7 @@ my(%test)   =
 
 for my $script (sort keys %test)
 {
-	$count += process_output($script, $test{$script}, $runner -> run_script(File::Spec -> catdir('t', $script) ) );
+	$count += process_output($script, $test{$script}, $runner -> run_script(File::Spec -> catfile('t', $script) ) );
 }
 
 done_testing($count);

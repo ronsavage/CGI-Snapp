@@ -23,6 +23,7 @@ requires =>
 	CGI::PSGI       => 0.15,
 	CGI::Simple     => 1.113,
 	Class::ISA      => 0.36,
+	File::Spec      => 0.86,
 	Hash::FieldHash => 0.10,
 	IO::Pipe        => 1.13,
 	Log::Handler    => 0.75,

@@ -4,6 +4,8 @@ use warnings;
 
 use CGI::Snapp::RunScript;
 
+use File::Spec;
+
 use Test::More;
 
 # -----------------------------------------------
@@ -206,13 +208,13 @@ sub test_h
 my($runner) = CGI::Snapp::RunScript -> new;
 my($count)  = 0;
 
-$count += test_a($runner, 't/hook.test.a.pl');
-$count += test_b($runner, 't/hook.test.b.pl');
-$count += test_c($runner, 't/hook.test.c.pl');
-$count += test_d($runner, 't/hook.test.d.pl');
-$count += test_e($runner, 't/hook.test.a.pl');
-$count += test_f($runner, 't/hook.test.b.pl');
-$count += test_g($runner, 't/hook.test.c.pl');
-$count += test_h($runner, 't/hook.test.d.pl');
+$count += test_a($runner, File::Spec -> catdir('t', 'hook.test.a.pl') );
+$count += test_b($runner, File::Spec -> catdir('t', 'hook.test.b.pl') );
+$count += test_c($runner, File::Spec -> catdir('t', 'hook.test.c.pl') );
+$count += test_d($runner, File::Spec -> catdir('t', 'hook.test.d.pl') );
+$count += test_e($runner, File::Spec -> catdir('t', 'hook.test.a.pl') );
+$count += test_f($runner, File::Spec -> catdir('t', 'hook.test.b.pl') );
+$count += test_g($runner, File::Spec -> catdir('t', 'hook.test.c.pl') );
+$count += test_h($runner, File::Spec -> catdir('t', 'hook.test.d.pl') );
 
 done_testing($count);

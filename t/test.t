@@ -4,6 +4,8 @@ use warnings;
 
 use CGI::Snapp::RunScript;
 
+use File::Spec;
+
 use Test::More;
 
 # -----------------------------------------------
@@ -53,7 +55,7 @@ my(%test)   =
 
 for my $script (sort keys %test)
 {
-	$count += process_output($script, $test{$script}, $runner -> run_script("t/$script") );
+	$count += process_output($script, $test{$script}, $runner -> run_script(File::Spec -> catdir('t', $script) ) );
 }
 
 done_testing($count);

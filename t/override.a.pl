@@ -38,7 +38,7 @@ sub test_a
 
 my($count) = 0;
 
-$count += test_a('t/overrides.a.pl');
+$count += test_a;
 
 done_testing($count);
 

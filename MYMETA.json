@@ -33,6 +33,7 @@
             "Capture::Tiny" : "0.16",
             "Carp" : "1.2",
             "Class::ISA" : "0.36",
+            "File::Spec" : "0.86",
             "Hash::FieldHash" : "0.1",
             "IO::Pipe" : "1.13",
             "Log::Handler" : "0.75",

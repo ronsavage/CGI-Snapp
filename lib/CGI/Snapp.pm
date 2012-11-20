@@ -1322,7 +1322,7 @@ Specify a logger compatible with L<Log::Handler>.
 Default: '' (The empty string).
 
 To clarify: The built-in calls to log() all use a log level of 'debug', so if your logger has 'maxlevel' set
-to anything less than 'debug', nothing nothing will get logged.
+to anything less than 'debug', nothing will get logged.
 
 'maxlevel' and 'minlevel' are discussed in L<Log::Handler#LOG-LEVELS> and L<Log::Handler::Levels>.
 

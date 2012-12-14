@@ -42,7 +42,7 @@ my(%class_callbacks) =
 
 my($myself);
 
-our $VERSION = '1.03';
+our $VERSION = '1.04';
 
 # --------------------------------------------------
 
@@ -666,14 +666,14 @@ sub _init
 sub log
 {
 	my($self, $level, $s) = @_;
-
-	croak "Error: No level defined in call to log()\n" if (! defined $level);
+	$level ||= 'info';
+	$s     ||= '';
 
 	# We can't use $self here because add_callback can be called as a class method,
 	# and logging inside add_callback would then call here without initializing $self
 	# to be an instance. It would just be the string name of the class calling add_callback.
 
-	$myself -> logger -> $level($s) if ($myself && $myself -> logger);
+	$myself -> logger -> log(level => $level, message => $s) if ($myself && $myself -> logger);
 
 } # End of log.
 

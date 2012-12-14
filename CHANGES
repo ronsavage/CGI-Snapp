@@ -1,5 +1,16 @@
 Revision history for Perl extension CGI::Snapp.
 
+1.04  Fri Dec 14 16:38:00 2012
+	- Unreleased
+	- Change sub log():
+		From: $myself -> logger -> $level($s) if ($myself && $myself -> logger)
+		To:   $myself -> logger -> log(level => $level, message => $s) if ($myself && $myself -> logger)
+		The reason for this is that if your code which sub-classes CGI::Snapp is also derived from another
+		class or role, that class or role had to provide not just the log() method, but all of debug(),
+		info(), notice(), warning(), warn(), error(), err(), critical(), crit(), alert(), emergency()
+		and emerg(), just in case any of them are needed.
+		I should not have used that design, because it forces other code to provide too much complexity.
+
 1.03  Sat Nov 17 10:31:00 2012
 	- Use File::Spec -> catfile('t', 'x.pl') instead of 't/x.pl' in tests.
 		This should solve RT#81241 reported by CHORNY under MS Windows.

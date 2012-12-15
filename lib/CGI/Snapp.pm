@@ -673,7 +673,7 @@ sub log
 	# and logging inside add_callback would then call here without initializing $self
 	# to be an instance. It would just be the string name of the class calling add_callback.
 
-	$myself -> logger -> log(level => $level, message => $s) if ($myself && $myself -> logger);
+	$myself -> logger -> log($level => $s) if ($myself && $myself -> logger);
 
 } # End of log.
 

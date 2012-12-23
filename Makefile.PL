@@ -8,7 +8,7 @@ WriteMakefile
 ($] ge '5.005') ?
 (
  AUTHOR   => 'Ron Savage (ron@savage.net.au)',
- ABSTRACT => 'A almost back-compat fork of CGI::Application',
+ ABSTRACT => 'An almost back-compat fork of CGI::Application',
    ) : (),
 clean =>
 {

@@ -1016,7 +1016,7 @@ sub teardown
 
 =head1 NAME
 
-CGI::Snapp - A almost back-compat fork of CGI::Application
+CGI::Snapp - An almost back-compat fork of CGI::Application
 
 =head1 Synopsis
 

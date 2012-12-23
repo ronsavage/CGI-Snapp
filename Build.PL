@@ -4,7 +4,7 @@ Module::Build -> new
 (
 module_name    => 'CGI::Snapp',
 license        => 'artistic',
-dist_abstract  => 'A almost back-compat fork of CGI::Application',
+dist_abstract  => 'An almost back-compat fork of CGI::Application',
 dist_author    => 'Ron Savage <ron@savage.net.au>',
 build_requires =>
 {

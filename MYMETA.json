@@ -1,5 +1,5 @@
 {
-   "abstract" : "A almost back-compat fork of CGI::Application",
+   "abstract" : "An almost back-compat fork of CGI::Application",
    "author" : [
       "Ron Savage <ron@savage.net.au>"
    ],

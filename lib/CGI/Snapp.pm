@@ -1697,13 +1697,17 @@ Generates a redirection header to send to the HTTP client.
 
 =head2 log($level, $string)
 
-If a logger object exists, then this calls the $level method of that object, passing it $string to log.
+If a logger object exists, then this calls the log() method of that object, passing it $level and $string.
 
 Returns nothing.
 
 So, the body of this method consists of this 1 line:
 
-	$self -> logger -> $level($string) if ($self && $self -> logger);
+	$self -> logger -> log($level => $string) if ($self && $self -> logger);
+
+Up until V 1.03, this used to call $self -> logger -> $level($s), but the change was made to allow
+simpler loggers, meaning they did not have to implement all the methods covered by $level().
+See CHANGES for details. For more on log levels, see L<Log::Handler::Levels>.
 
 =head2 logger([$logger_object])
 

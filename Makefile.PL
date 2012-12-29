@@ -1,5 +1,5 @@
 use ExtUtils::MakeMaker;
-	LICENSE   => 'perl_5',
+	LICENSE   => 'artistic_2',
 
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
@@ -22,7 +22,7 @@ WriteMakefile
 	},
 	DISTNAME  => 'CGI-Snapp',
 	NAME      => 'CGI::Snapp',
-	LICENSE   => 'perl_5',
+	LICENSE   => 'artistic_2',
 	PL_FILES  => {},
 	PREREQ_PM =>
 	{

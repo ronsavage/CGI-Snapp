@@ -10,6 +10,7 @@ Revision history for Perl extension CGI::Snapp.
 		warn(), error(), err(), critical(), crit(), alert(), emergency() and emerg(), just in case any
 		of them are needed.
 		I should not have used that design, because it forces other code to provide too much complexity.
+	- Update licence to perl_5. See https://metacpan.org/module/CPAN::Meta::Spec#license.
 
 1.03  Sat Nov 17 10:31:00 2012
 	- Use File::Spec -> catfile('t', 'x.pl') instead of 't/x.pl' in tests.

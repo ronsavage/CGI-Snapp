@@ -1689,6 +1689,8 @@ The default. Uses the hash returned by L</header_props([@headers])> to generate 
 
 Don't output any headers. See also the L</send_output([$Boolean)]> method.
 
+In this case the HTTP status is set to 200.
+
 =item o 'redirect'
 
 Generates a redirection header to send to the HTTP client.

@@ -2078,6 +2078,21 @@ L<the Data::Session Troubleshooting guidelines|https://metacpan.org/module/Data:
 
 =head1 FAQ
 
+=head2 Do I need to output a header when using Ajax?
+
+Yes. At least, when I use jQuery I must do this in a run mode:
+
+	$self -> add_header(Status => 200, 'Content-Type' => 'text/html; charset=utf-8');
+
+	return $self -> param('view') -> search -> display($name, $row);
+
+Here, display() returns a HTML table wrapped in 2 divs in the jQuery style, which becomes the return value
+of the run mode.
+
+The quoted code is in L<App::Office::Contacts::Controller::Exporter::Search>'s display (the run mode), and the
+display() method being called above is in L<App::Office::Contacts::View::Search>, but it will be the same no
+matter which Perl app you're running.
+
 =head2 Does CGI::Snapp V 1.01 support PSGI?
 
 Yes. See L</psgi_app()> and L<CGI::Snapp::Dispatch>.

@@ -13,6 +13,7 @@ Revision history for Perl extension CGI::Snapp.
 	- Update licence to perl_5. See https://metacpan.org/module/CPAN::Meta::Spec#license.
 	- Add a note to the POD for header_type(), about the HTTP status being set to 200 when the header type
 		has been set to 'none'.
+	- Add a note to the FAQ about explicitly outputting a header when using Ajax (at least with jQuery).
 
 1.03  Sat Nov 17 10:31:00 2012
 	- Use File::Spec -> catfile('t', 'x.pl') instead of 't/x.pl' in tests.

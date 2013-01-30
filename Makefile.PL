@@ -39,7 +39,7 @@ WriteMakefile
 		parent          => 0.225,
 		Proc::Fork      => 0.71,
 		strict          => 1.03,
-		Test::Simple    => 0.94,
+		Test::More    => 0.94,
 		Test::Pod       => 1.45,
 		Try::Tiny       => 0.11,
 		vars            => 1.01,

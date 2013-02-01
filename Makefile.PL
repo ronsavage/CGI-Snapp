@@ -40,7 +40,7 @@ WriteMakefile
 		Proc::Fork      => 0.71,
 		strict          => 1.03,
 		Test::More    => 0.94,
-		Test::Pod       => 1.45,
+#		Test::Pod       => 1.45, # Make it optional. See t/pod.t
 		Try::Tiny       => 0.11,
 		vars            => 1.01,
 		warnings        => 1.03,

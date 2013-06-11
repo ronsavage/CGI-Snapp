@@ -1,11 +1,9 @@
 Revision history for Perl extension CGI::Snapp.
 
-1.05  Thu Apr 18 13:08:00 2013
-	- Unreleased.
-	- Add a test of add_header() to t/headers.pl.
-
 1.04  Fri Dec 14 16:38:00 2012
-	- Unreleased
+	- Rename CHANGES to Changes as per CPAN::Changes::Spec.
+	- Add a test of add_header() to t/headers.pl.
+	- Update corresponding test count in t/test.t.
 	- Change sub log():
 		From: $myself -> logger -> $level($s)        if ($myself && $myself -> logger)
 		To:   $myself -> logger -> log($level => $s) if ($myself && $myself -> logger)
@@ -14,7 +12,7 @@ Revision history for Perl extension CGI::Snapp.
 		warn(), error(), err(), critical(), crit(), alert(), emergency() and emerg(), just in case any
 		of them are needed.
 		I should not have used that design, because it forces other code to provide too much complexity.
-	- Update licence to perl_5. See https://metacpan.org/module/CPAN::Meta::Spec#license.
+	- Update licence to perl_5. See https://metacpan.org/module/CPAN::Meta::Spec.
 	- Add a note to the POD for header_type(), about the HTTP status being set to 200 when the header type
 		has been set to 'none'.
 	- Add a note to the FAQ about explicitly outputting a header when using Ajax (at least with jQuery).

@@ -3,11 +3,11 @@ abstract: 'An almost back-compat fork of CGI::Application'
 author:
   - 'Ron Savage <ron@savage.net.au>'
 build_requires:
-  ExtUtils::MakeMaker: 0
+  Test::More: 0.94
 configure_requires:
   Module::Build: 0
 dynamic_config: 0
-generated_by: 'Module::Build version 0.4003, CPAN::Meta::Converter version 2.120630, CPAN::Meta::Converter version 2.120921'
+generated_by: 'Module::Build version 0.4005, CPAN::Meta::Converter version 2.120921'
 license: artistic
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -29,7 +29,6 @@ requires:
   IO::Pipe: 1.13
   Log::Handler: 0.75
   Proc::Fork: 0.71
-  Test::More: 0.94
   Try::Tiny: 0.11
   parent: 0.225
   strict: 1.03

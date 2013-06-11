@@ -4,7 +4,7 @@
       "Ron Savage <ron@savage.net.au>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Module::Build version 0.4003, CPAN::Meta::Converter version 2.120630, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "Module::Build version 0.4005, CPAN::Meta::Converter version 2.120921",
    "license" : [
       "artistic_1"
    ],
@@ -16,7 +16,7 @@
    "prereqs" : {
       "build" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : "0"
+            "Test::More" : "0.94"
          }
       },
       "configure" : {
@@ -37,7 +37,6 @@
             "IO::Pipe" : "1.13",
             "Log::Handler" : "0.75",
             "Proc::Fork" : "0.71",
-            "Test::More" : "0.94",
             "Try::Tiny" : "0.11",
             "parent" : "0.225",
             "strict" : "1.03",

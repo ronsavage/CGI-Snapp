@@ -16,7 +16,10 @@ sub process_output
 
 	ok(length($output) > 0, "run() in $script returned real data");
 
-	my($count);
+	# We need to set this to 0 in case Test::Pod is not installed,
+	# because in that case there is no output, and $count is undef.
+
+	my($count) = 0;
 
 	for my $line (@$output)
 	{
@@ -47,11 +50,15 @@ my(%test)   =
 	'isa.pl'        =>  1,
 	'overrides.pl'  =>  2,
 	'params.pl'     => 12,
-	'pod.pl'        =>  1,
+	'pod.pl'        =>  1, # If Test::Pod is installed. See below.
 	'psgi.basic.pl' =>  4,
 	'run.modes.pl'  => 11,
 	'subclass.pl'   =>  3,
 );
+
+eval "use Test::Pod 1.45";
+
+$test{'pod.pl'} = 0 if ($@);
 
 for my $script (sort keys %test)
 {

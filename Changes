@@ -1,6 +1,9 @@
 Revision history for Perl extension CGI::Snapp.
 
-1.04  Fri Dec 14 16:38:00 2012
+1.05  Thu Jun 13 12:44:00 2013
+	- Patch t/test.t so that when Test::Pod is not installed, we expect 0 test results from t/pod.t.
+
+1.04  Wed Jun 12 16:38:00 2013
 	- Rename CHANGES to Changes as per CPAN::Changes::Spec.
 	- Add a test of add_header() to t/headers.pl.
 	- Update corresponding test count in t/test.t.

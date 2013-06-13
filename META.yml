@@ -7,7 +7,7 @@ build_requires:
 configure_requires:
   Module::Build: 0
 dynamic_config: 1
-generated_by: 'Module::Build version 0.4005, CPAN::Meta::Converter version 2.120921'
+generated_by: 'Module::Build version 0.4005, CPAN::Meta::Converter version 2.131560'
 license: artistic_2
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -16,7 +16,7 @@ name: CGI-Snapp
 provides:
   CGI::Snapp:
     file: lib/CGI/Snapp.pm
-    version: 1.04
+    version: 1.05
 requires:
   CGI: 3.59
   CGI::PSGI: 0.15
@@ -36,4 +36,4 @@ requires:
   warnings: 1.03
 resources:
   license: http://www.perlfoundation.org/artistic_license_2_0
-version: 1.04
+version: 1.05

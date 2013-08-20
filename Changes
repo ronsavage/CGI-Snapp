@@ -1,5 +1,10 @@
 Revision history for Perl extension CGI::Snapp.
 
+1.06  Tue Aug 20 12:30:00 2013
+	- Switch from Test::More.is_deeply() to Test::Deep.cmp_deeply().
+		Hopefully this will solve lots of CPAN tester failures, which were possibly related to is_deeply()
+		not handling hash key re-ordering.
+
 1.05  Thu Jun 13 12:44:00 2013
 	- Patch t/test.t so that when Test::Pod is not installed, we expect 0 test results from t/pod.t.
 

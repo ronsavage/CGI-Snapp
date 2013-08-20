@@ -6,6 +6,7 @@ use CGI::Snapp::SubClass;
 
 use Log::Handler;
 
+use Test::Deep;
 use Test::More;
 
 # ------------------------------------------------
@@ -38,10 +39,10 @@ $app -> param(%old_params);
 
 my(%new_params) = map{($_ => $app -> param($_) )} $app -> param;
 
-is_deeply(\%old_params, \%new_params, 'Can set and get a hash of params'); $count++;
+cmp_deeply(\%old_params, \%new_params, 'Can set and get a hash of params'); $count++;
 
 $app -> delete($_) for keys %old_params;
 
-is_deeply([$app -> param], [], 'No params are set after mass delete'); $count++;
+cmp_deeply([$app -> param], [], 'No params are set after mass delete'); $count++;
 
 done_testing($count);

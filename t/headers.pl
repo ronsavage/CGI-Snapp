@@ -7,6 +7,7 @@ use CGI::Snapp::Header;
 
 use Log::Handler;
 
+use Test::Deep;
 use Test::More tests => 17;
 
 # ------------------------------------------------
@@ -43,7 +44,7 @@ ok($output =~ m|Content-Type: text/html|, "'Content-Type: text/html' present in 
 $app -> header_type('redirect');
 $app -> header_props(-uri => 'http://savage.net.au/');
 
-is_deeply({$app -> header_props}, {-uri => 'http://savage.net.au/'}, 'Set/get header props');
+cmp_deeply({$app -> header_props}, {-uri => 'http://savage.net.au/'}, 'Set/get header props');
 
 $output = $app -> run;
 
@@ -87,7 +88,7 @@ my($snapper)     = CGI::Snapp -> new;
 my(%old_headers) = $snapper -> header_props;
 my(%new_headers) = $snapper -> add_header(Status => 200, 'Content-Type' => 'text/html; charset=utf-8');
 
-is_deeply({'Content-Type' => 'text/html; charset=utf-8', Status => 200}, \%new_headers, 'add_header() works');
+cmp_deeply({'Content-Type' => 'text/html; charset=utf-8', Status => 200}, \%new_headers, 'add_header() works');
 
 #$logger -> log(debug => 'Old headers:');
 #$logger -> log(debug => "$_ => $old_headers{$_}") for sort keys %old_headers;

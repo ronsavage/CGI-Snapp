@@ -8,6 +8,7 @@ use CGI::Snapp::RunModes;
 
 use Log::Handler;
 
+use Test::Deep;
 use Test::More tests => 11;
 
 use Try::Tiny;
@@ -125,7 +126,7 @@ sub test_3
 
 	my(%run_modes) = $app -> run_modes;
 
-	is_deeply([map{($_ => $run_modes{$_})} sort keys %run_modes], [qw/first_r_m first_sub one one start dump_html/], 'Set and retrieve run modes; preserving start');
+	cmp_deeply([map{($_ => $run_modes{$_})} sort keys %run_modes], [qw/first_r_m first_sub one one start dump_html/], 'Set and retrieve run modes; preserving start');
 
 } # End of test_3.
 
@@ -160,13 +161,13 @@ sub test_4
 
 	%run_modes = $app -> run_modes;
 
-	is_deeply([map{($_ => $run_modes{$_})} sort keys %run_modes], [qw/one one_rm second_rm second_sub start dump_html/], 'Set and retrieve run modes, replacing start');
+	cmp_deeply([map{($_ => $run_modes{$_})} sort keys %run_modes], [qw/one one_rm second_rm second_sub start dump_html/], 'Set and retrieve run modes, replacing start');
 
 	$app -> run_modes({});
 
 	my(%same_modes) = $app -> run_modes;
 
-	is_deeply(\%run_modes, \%same_modes, 'Check $app -> run_modes({}) is a no-op');
+	cmp_deeply(\%run_modes, \%same_modes, 'Check $app -> run_modes({}) is a no-op');
 
 } # End of test_4.
 

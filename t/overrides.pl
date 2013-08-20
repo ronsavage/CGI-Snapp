@@ -6,6 +6,7 @@ use CGI::Snapp::RunScript;
 
 use File::Spec;
 
+use Test::Deep;
 use Test::More;
 
 # -----------------------------------------------
@@ -28,7 +29,7 @@ sub test_a
 ];
 	ok($#$output >= 0, "$script returned real data");
 
-	is_deeply($output, $expect, "$script ran the correct overrides");
+	cmp_deeply($output, $expect, "$script ran the correct overrides");
 
 	return 2;
 

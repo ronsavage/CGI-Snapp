@@ -6,6 +6,7 @@ use CGI::Snapp;
 
 use Log::Handler;
 
+use Test::Deep;
 use Test::More tests => 4;
 
 # ------------------------------------------------
@@ -32,7 +33,7 @@ my($modes) = {finish => 'finisher', starter => 'starter'};
 $app -> query -> param(rm => 'start');
 $app -> run_modes($modes);
 
-is_deeply({$app -> run_modes}, {%$modes, start => 'dump_html'}, 'Set/get run modes');
+cmp_deeply({$app -> run_modes}, {%$modes, start => 'dump_html'}, 'Set/get run modes');
 
 my($output) = $app -> run;
 

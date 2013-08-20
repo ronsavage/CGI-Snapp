@@ -8,7 +8,7 @@ use Hash::FieldHash ':all';
 
 fieldhash my %verbose => 'verbose';
 
-our $VERSION = '1.04';
+our $VERSION = '1.05';
 
 # --------------------------------------------------
 

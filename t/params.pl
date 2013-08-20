@@ -6,6 +6,7 @@ use CGI::Snapp;
 
 use Log::Handler;
 
+use Test::Deep;
 use Test::More;
 
 # ------------------------------------------------
@@ -28,7 +29,7 @@ my($app)   = CGI::Snapp -> new(logger => $logger, send_output => 0);
 
 # Get the default params, of which there are none.
 
-is_deeply([$app -> param], [], 'No params are set by default'); $count++;
+cmp_deeply([$app -> param], [], 'No params are set by default'); $count++;
 
 # Set/get a hash of params.
 
@@ -38,11 +39,11 @@ $app -> param(%old_params);
 
 my(%new_params) = map{($_ => $app -> param($_) )} $app -> param;
 
-is_deeply(\%old_params, \%new_params, 'Can set and get a hash of params'); $count++;
+cmp_deeply(\%old_params, \%new_params, 'Can set and get a hash of params'); $count++;
 
 $app -> delete($_) for keys %old_params;
 
-is_deeply([$app -> param], [], 'No params are set after mass delete'); $count++;
+cmp_deeply([$app -> param], [], 'No params are set after mass delete'); $count++;
 
 # Set/get a hashref of params.
 
@@ -52,11 +53,11 @@ $app -> param($old_params);
 
 %new_params = map{($_ => $app -> param($_) ) } $app -> param;
 
-is_deeply($old_params, \%new_params, 'Can set and get a hash of params'); $count++;
+cmp_deeply($old_params, \%new_params, 'Can set and get a hash of params'); $count++;
 
 $app -> delete($_) for keys %$old_params;
 
-is_deeply([$app -> param], [], 'No params are set after mass delete'); $count++;
+cmp_deeply([$app -> param], [], 'No params are set after mass delete'); $count++;
 
 # Add params in stages.
 
@@ -79,7 +80,7 @@ ok($value == $app -> param('five'), 'param($key) also returns that value'); $cou
 
 %new_params = map{($_ => $app -> param($_) )} $app -> param;
 
-is_deeply(\%old_params, \%new_params, 'Params match after being added in stages'); $count++;
+cmp_deeply(\%old_params, \%new_params, 'Params match after being added in stages'); $count++;
 
 # What is returned after delete()?
 
@@ -103,6 +104,6 @@ $app -> param($old_params);
 
 %new_params = map{($_ => $app -> param($_) )} $app -> param;
 
-is_deeply($old_params, [%new_params], 'Params match after being added via an arrayref'); $count++;
+cmp_deeply($old_params, [%new_params], 'Params match after being added via an arrayref'); $count++;
 
 done_testing($count);

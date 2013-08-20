@@ -6,6 +6,7 @@ use CGI::Snapp::RunScript;
 
 use File::Spec;
 
+use Test::Deep;
 use Test::More;
 
 # -----------------------------------------------
@@ -28,7 +29,7 @@ sub test_a
 'CGI::Snapp::Plugin::HookTest2.teardown_sub()',
 ];
 	ok($#$output >= 0, "$script returned real data");
-	is_deeply($output, $expect, "$script ran the correct class-level hooks");
+	cmp_deeply($output, $expect, "$script ran the correct class-level hooks");
 
 	return 2;
 
@@ -54,7 +55,7 @@ sub test_b
 'CGI::Snapp::Plugin::HookTest1.teardown_sub()',
 ];
 	ok($#$output >= 0, "$script returned real data");
-	is_deeply($output, $expect, "$script ran the correct class-level hooks");
+	cmp_deeply($output, $expect, "$script ran the correct class-level hooks");
 
 	return 2;
 
@@ -80,7 +81,7 @@ sub test_c
 'CGI::Snapp::Plugin::HookTest2.teardown_sub()',
 ];
 	ok($#$output >= 0, "$script returned real data");
-	is_deeply($output, $expect, "$script ran the correct class-level hooks");
+	cmp_deeply($output, $expect, "$script ran the correct class-level hooks");
 
 	return 2;
 
@@ -106,7 +107,7 @@ sub test_d
 'CGI::Snapp::Plugin::HookTest2.teardown_sub()',
 ];
 	ok($#$output >= 0, "$script returned real data");
-	is_deeply($output, $expect, "$script ran the correct class-level hooks");
+	cmp_deeply($output, $expect, "$script ran the correct class-level hooks");
 
 	return 2;
 
@@ -130,7 +131,7 @@ sub test_e
 'CGI::Snapp::HookTestA.start_sub()',
 ];
 	ok($#$output >= 0, "$script returned real data");
-	is_deeply($output, $expect, "$script ran the correct object-level hooks");
+	cmp_deeply($output, $expect, "$script ran the correct object-level hooks");
 
 	return 2;
 
@@ -153,7 +154,7 @@ sub test_f
 'CGI::Snapp::HookTestB.start_sub()',
 ];
 	ok($#$output >= 0, "$script returned real data");
-	is_deeply($output, $expect, "$script ran the correct object-level hooks");
+	cmp_deeply($output, $expect, "$script ran the correct object-level hooks");
 
 	return 2;
 
@@ -175,7 +176,7 @@ sub test_g
 'CGI::Snapp::HookTestC.start_sub()',
 ];
 	ok($#$output >= 0, "$script returned real data");
-	is_deeply($output, $expect, "$script ran the correct object-level hooks");
+	cmp_deeply($output, $expect, "$script ran the correct object-level hooks");
 
 	return 2;
 
@@ -197,7 +198,7 @@ sub test_h
 'CGI::Snapp::HookTestD.start_sub()',
 ];
 	ok($#$output >= 0, "$script returned real data");
-	is_deeply($output, $expect, "$script ran the correct object-level hooks");
+	cmp_deeply($output, $expect, "$script ran the correct object-level hooks");
 
 	return 2;
 

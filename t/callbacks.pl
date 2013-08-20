@@ -6,6 +6,7 @@ use CGI::Snapp::Callback;
 
 use Log::Handler;
 
+use Test::Deep;
 use Test::More;
 
 # ------------------------------------------------
@@ -35,7 +36,7 @@ my($modes) = {finish => 'finisher', start => 'starter'};
 
 $app -> run_modes($modes);
 
-is_deeply({$app -> run_modes}, $modes, 'Set/get run modes'); $count++;
+cmp_deeply({$app -> run_modes}, $modes, 'Set/get run modes'); $count++;
 
 ok(length($app -> run) > 0, "Output from $0 is not empty"); $count++;
 isa_ok($app -> query, 'CGI::Simple');                       $count++;

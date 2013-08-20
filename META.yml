@@ -3,6 +3,7 @@ abstract: 'An almost back-compat fork of CGI::Application'
 author:
   - 'Ron Savage <ron@savage.net.au>'
 build_requires:
+  Test::Deep: 0.11
   Test::More: 0.94
 configure_requires:
   Module::Build: 0

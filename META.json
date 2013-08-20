@@ -48,7 +48,7 @@
    "provides" : {
       "CGI::Snapp" : {
          "file" : "lib/CGI/Snapp.pm",
-         "version" : "1.05"
+         "version" : "1.06"
       }
    },
    "release_status" : "stable",
@@ -57,5 +57,5 @@
          "http://www.perlfoundation.org/artistic_license_2_0"
       ]
    },
-   "version" : "1.05"
+   "version" : "1.06"
 }

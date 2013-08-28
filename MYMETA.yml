@@ -17,7 +17,7 @@ name: CGI-Snapp
 provides:
   CGI::Snapp:
     file: lib/CGI/Snapp.pm
-    version: 1.06
+    version: 1.07
 requires:
   CGI: 3.59
   CGI::PSGI: 0.15
@@ -37,4 +37,4 @@ requires:
   warnings: 1.03
 resources:
   license: http://www.perlfoundation.org/artistic_license_2_0
-version: 1.06
+version: 1.07

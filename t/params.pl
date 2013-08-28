@@ -4,6 +4,8 @@ use warnings;
 
 use CGI::Snapp;
 
+use Data::Dumper; # For Dumper().
+
 use Log::Handler;
 
 use Test::Deep;
@@ -29,6 +31,13 @@ my($app)   = CGI::Snapp -> new(logger => $logger, send_output => 0);
 
 # Get the default params, of which there are none.
 
+diag 'Start test 1';
+diag '-' x 20;
+diag Dumper([$app -> param]);
+diag '-' x 20;
+diag Dumper([]);
+diag '-' x 20;
+
 cmp_deeply([$app -> param], [], 'No params are set by default'); $count++;
 
 # Set/get a hash of params.
@@ -39,9 +48,23 @@ $app -> param(%old_params);
 
 my(%new_params) = map{($_ => $app -> param($_) )} $app -> param;
 
-cmp_deeply(\%old_params, \%new_params, 'Can set and get a hash of params'); $count++;
+diag 'Start test 2';
+diag '-' x 20;
+diag Dumper(\%old_params);
+diag '-' x 20;
+diag Dumper(\%new_params);
+diag '-' x 20;
+
+cmp_deeply([sort %old_params], [sort %new_params], 'Can set and get a hash of params'); $count++;
 
 $app -> delete($_) for keys %old_params;
+
+diag 'Start test 3';
+diag '-' x 20;
+diag Dumper([$app -> param]);
+diag '-' x 20;
+diag Dumper([]);
+diag '-' x 20;
 
 cmp_deeply([$app -> param], [], 'No params are set after mass delete'); $count++;
 
@@ -53,9 +76,23 @@ $app -> param($old_params);
 
 %new_params = map{($_ => $app -> param($_) ) } $app -> param;
 
-cmp_deeply($old_params, \%new_params, 'Can set and get a hash of params'); $count++;
+diag 'Start test 4';
+diag '-' x 20;
+diag Dumper($old_params);
+diag '-' x 20;
+diag Dumper(\%new_params);
+diag '-' x 20;
+
+cmp_deeply([sort %$old_params], [sort %new_params], 'Can set and get a hash of params'); $count++;
 
 $app -> delete($_) for keys %$old_params;
+
+diag 'Start test 5';
+diag '-' x 20;
+diag Dumper([$app -> param]);
+diag '-' x 20;
+diag Dumper([]);
+diag '-' x 20;
 
 cmp_deeply([$app -> param], [], 'No params are set after mass delete'); $count++;
 
@@ -73,24 +110,68 @@ $app -> param(%old_params);
 
 my($value) = $app -> param(%old_params);
 
+diag 'Start test 6';
+diag '-' x 20;
+diag Dumper($value);
+diag '-' x 20;
+diag Dumper(5);
+diag '-' x 20;
+
 ok($value == 5, 'param($key => $value) returns that value');                $count++;
+
+diag 'Start test 7';
+diag '-' x 20;
+diag Dumper($value);
+diag '-' x 20;
+diag Dumper($app -> param('five') );
+diag '-' x 20;
+
 ok($value == $app -> param('five'), 'param($key) also returns that value'); $count++;
 
 %old_params = (one => 1, two => 2, three => 3, four => 4, %old_params);
 
 %new_params = map{($_ => $app -> param($_) )} $app -> param;
 
-cmp_deeply(\%old_params, \%new_params, 'Params match after being added in stages'); $count++;
+diag 'Start test 8';
+diag '-' x 20;
+diag Dumper(\%old_params);
+diag '-' x 20;
+diag Dumper(\%new_params);
+diag '-' x 20;
+
+cmp_deeply([sort %old_params], [sort %new_params], 'Params match after being added in stages'); $count++;
 
 # What is returned after delete()?
 
 my($key) = 'five';
 $value   = $app -> delete($key);
 
+diag 'Start test 9';
+diag '-' x 20;
+diag Dumper($value);
+diag '-' x 20;
+diag Dumper(5);
+diag '-' x 20;
+
 ok($value == 5, "delete($key) returns the corresponding value: $value");            $count++;
+
+diag 'Start test 10';
+diag '-' x 20;
+diag Dumper($app -> param($key) );
+diag '-' x 20;
+diag '$VAR1 = undef;';
+diag '-' x 20;
+
 ok(! defined $app -> param($key), "After delete($key), param($key) returns undef"); $count++;
 
 $value = $app -> delete($key);
+
+diag 'Start test 11';
+diag '-' x 20;
+diag Dumper($value);
+diag '-' x 20;
+diag '$VAR1 = undef;';
+diag '-' x 20;
 
 ok(! defined $value, "After delete($key) twice, delete() returns undef"); $count++;
 
@@ -104,6 +185,13 @@ $app -> param($old_params);
 
 %new_params = map{($_ => $app -> param($_) )} $app -> param;
 
-cmp_deeply($old_params, [%new_params], 'Params match after being added via an arrayref'); $count++;
+diag 'Start test 12';
+diag '-' x 20;
+diag Dumper($old_params);
+diag '-' x 20;
+diag Dumper([%new_params]);
+diag '-' x 20;
+
+cmp_deeply([sort @$old_params], [sort %new_params], 'Params match after being added via an arrayref'); $count++;
 
 done_testing($count);

@@ -14,7 +14,7 @@ sub process_output
 {
 	my($script, $test_count, $output) = @_;
 
-	ok(length($output) > 0, "run() in $script returned real data");
+	ok(length(join('', @$output) ) > 0, "run() in $script returned real data");
 
 	# We need to set this to 0 in case Test::Pod is not installed,
 	# because in that case there is no output, and $count is undef.
@@ -28,7 +28,7 @@ sub process_output
 		$count = $1 if ($line =~ /^ok\s(\d+)/);
 	}
 
-	ok($count == $test_count, "$script ran $count test" . ($count == 1 ? '' : 's') );
+	is($count, $test_count, "$script ran $count test" . ($count == 1 ? '' : 's') );
 
 	# Return the # of tests in /this/ script.
 

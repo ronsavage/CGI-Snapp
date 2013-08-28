@@ -4,7 +4,8 @@ Revision history for Perl extension CGI::Snapp.
 	- t/test.t: Clean up usage of arrayref 'v' array, to make test more reliable.
 		Thanx to Alexandr Ciornii. See RT#81241.
 	- t/params.pl: Sort all hashes (yes, keys and values) and arrays to make comparisons more reliable.
-		This has been causing ocassional test failues for CPAN testers. Thanx to Andreas Koenig.
+		This has been causing ocassional test failues for CPAN testers. Even Test::Deep.cmp_deeply chokes.
+		Thanx to Andreas Koenig.
 
 1.06  Tue Aug 20 12:30:00 2013
 	- Switch from Test::More.is_deeply() to Test::Deep.cmp_deeply().

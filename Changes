@@ -1,5 +1,12 @@
 Revision history for Perl extension CGI::Snapp.
 
+1.08  Thu Aug 29 17:17:00 2013
+	- Update pre-reqs in general, and in particular for Proc::Fork (0.71 to 0.802).
+		The aim here is to attack the problem Alexandr is having with the tests hanging under MS Windows.
+	- Use Data::Dumper::Concise and uncomment all the 'diag' calls in t/params.pl, in case I need the output
+		to diagnose the random failures on recent Perls, which Andreas thinks are related to hash
+		randomization issues. I would be a great relief to understand exactly what this problem really is.
+
 1.07  Wed Aug 28 14:30:00 2013
 	- t/test.t: Clean up usage of arrayref 'v' array, to make test more reliable.
 		Thanx to Alexandr Ciornii. See RT#81241.

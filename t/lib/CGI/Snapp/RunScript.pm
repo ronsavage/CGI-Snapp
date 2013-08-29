@@ -11,7 +11,7 @@ use IO::Pipe;
 
 use Proc::Fork;
 
-our $VERSION = '1.07';
+our $VERSION = '1.08';
 
 # --------------------------------------------------
 

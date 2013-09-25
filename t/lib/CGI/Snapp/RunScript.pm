@@ -44,9 +44,8 @@ sub run_script
 		}
 		child
 		{
-			my($stdout, $stderr, @result) = capture{system($^X, $script)};
 			$pipe -> writer;
-			print $pipe $stdout;
+			print $pipe $_ for qx/$^X $script/;
 			exit;
 		}
 		error

@@ -31,6 +31,7 @@ Module::Build -> new
 		'File::Spec'            => 3.40,
 		'Hash::FieldHash'       => 0.14,
 		'IO::Pipe'              => 1.14,
+		'lib'                   => 0,
 		'Log::Handler'          => 0.78,
 		'parent'                => 0.225,
 		'Proc::Fork'            => 0.802,

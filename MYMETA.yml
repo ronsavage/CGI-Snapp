@@ -8,7 +8,7 @@ build_requires:
 configure_requires:
   Module::Build: 0
 dynamic_config: 0
-generated_by: 'Module::Build version 0.4005, CPAN::Meta::Converter version 2.131560'
+generated_by: 'Module::Build version 0.4204, CPAN::Meta::Converter version 2.120921'
 license: artistic_2
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -32,6 +32,7 @@ requires:
   Log::Handler: 0.78
   Proc::Fork: 0.802
   Try::Tiny: 0.16
+  lib: 0
   parent: 0.225
   strict: 1.03
   vars: 1.01

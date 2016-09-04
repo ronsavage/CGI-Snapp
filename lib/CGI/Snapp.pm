@@ -2663,6 +2663,10 @@ Version numbers < 1.00 represent development versions. From 1.00 up, they are pr
 
 Please read L<CGI::Application/CREDITS> and L<CGI::Application::Dispatch/CONTRIBUTORS>, since a great deal of work has gone into both of those modules.
 
+=head1 Repository
+
+L<https://github.com/ronsavage/CGI-Snapp>
+
 =head1 Support
 
 Email the author, or log a bug on RT:

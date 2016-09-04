@@ -114,14 +114,14 @@ has => _run_modes
 has => send_output
 (
 	is       => 'rw',
-	default  => sub{return 0}
+	default  => sub{return 0},
 	required => 0,
 );
 
 has => _start_mode
 (
 	is       => 'rw',
-	default  => sub{return 'start'}
+	default  => sub{return 'start'},
 	required => 0,
 );
 

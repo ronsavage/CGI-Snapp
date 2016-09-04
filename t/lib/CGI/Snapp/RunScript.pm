@@ -27,32 +27,23 @@ sub new
 
 sub run_script
 {
-	my($self, $script) = @_;
-	my($pipe) = IO::Pipe -> new;
+	my($self, $script)	= @_;
+	my($cmd)			= "$^X $script";
 
 	my(@stack);
 
-	run_fork
 	{
-		parent
-		{
-			my($child) = @_;
+		no warnings; # Stops insecure PATH & dependency warnings...
 
-			waitpid $child, 0;
-			$pipe -> reader;
-			push @stack, $_ while <$pipe>;
-		}
-		child
+		open PIPE, "-|", $cmd || croak "Pipe died while testing script $script. \n";
+
+		while (my $line = <PIPE>)
 		{
-			$pipe -> writer;
-			print $pipe $_ for qx/$^X $script/;
-			exit;
+			push @stack, $line;
 		}
-		error
-		{
-			croak "Testing script $script\n";
-		}
-	};
+
+		close(PIPE) || croak "Pipe died while closing it. \n";
+	}
 
 	return [@stack];
 

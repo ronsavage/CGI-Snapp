@@ -1,13 +1,13 @@
 Revision history for Perl extension CGI::Snapp.
 
-1.08  Thu Aug 29 17:17:00 2013
+1.08  2013-08-29T17:17:00
 	- Update pre-reqs in general, and in particular for Proc::Fork (0.71 to 0.802).
 		The aim here is to attack the problem Alexandr is having with the tests hanging under MS Windows.
 	- Use Data::Dumper::Concise and uncomment all the 'diag' calls in t/params.pl, in case I need the output
 		to diagnose the random failures on recent Perls, which Andreas thinks are related to hash
 		randomization issues. I would be a great relief to understand exactly what this problem really is.
 
-1.07  Wed Aug 28 14:30:00 2013
+1.07  2013-08-28T14:30:00
 	- t/test.t: Clean up usage of arrayref 'v' array, to make test more reliable.
 		Thanx to Alexandr Ciornii. See RT#81241.
 	- t/params.pl: Sort all hashes (yes, keys and values) and arrays to make comparisons more reliable
@@ -15,14 +15,14 @@ Revision history for Perl extension CGI::Snapp.
 		This has been causing ocassional test failues for CPAN testers.
 		Thanx to Andreas Koenig.
 
-1.06  Tue Aug 20 12:30:00 2013
+1.06  2013-08-20T12:30:00
 	- Switch from Test::More.is_deeply() to Test::Deep.cmp_deeply().
 		This is to avoid hash key randomization issues.
 
-1.05  Thu Jun 13 12:44:00 2013
+1.05  2013-06-13T12:44:00
 	- Patch t/test.t so that when Test::Pod is not installed, we expect 0 test results from t/pod.t.
 
-1.04  Wed Jun 12 16:38:00 2013
+1.04  2013-06-12T16:38:00
 	- Rename CHANGES to Changes as per CPAN::Changes::Spec.
 	- Add a test of add_header() to t/headers.pl.
 	- Update corresponding test count in t/test.t.
@@ -39,11 +39,11 @@ Revision history for Perl extension CGI::Snapp.
 		has been set to 'none'.
 	- Add a note to the FAQ about explicitly outputting a header when using Ajax (at least with jQuery).
 
-1.03  Sat Nov 17 10:31:00 2012
+1.03  2012-11-17T10:31:00
 	- Use File::Spec -> catfile('t', 'x.pl') instead of 't/x.pl' in tests.
 		This should solve RT#81241 reported by CHORNY under MS Windows.
 
-1.02  Mon Sep 17 11:38:00 2012
+1.02  2012-09-17T11:38:00
 	- Add CGI::PSGI to the pre-reqs (Andreas Koenig).
 	- Change (in Build.PL) configure_requires{Module::Build} from 0.3800 to 0, after adapting advice from
 		 Andreas Koenig.
@@ -54,11 +54,11 @@ Revision history for Perl extension CGI::Snapp.
 		See also t/redirect.t and t/lib/CGI/Snapp/RedirectTest.pm.
 		Update docs.
 
-1.01  Sun Apr  8 10:40:00 2012
+1.01  2012-04-08T10:40:00
 	- Shift some code from run() into _determine_(cgi|psgi)_output().
 	- Add PSGI-specific code, sub as_psgi(), and make some changes to run() using $self -> _psgi().
 	- Add t/psgi.basic.pl.
 	- Also test via CGI::Snapp::Dispatch's t/psgi.args.t.
 
-1.00  Mon Feb 27 10:09:44 2012
+1.00  2012-02-27T10:09:44
 	- Original version

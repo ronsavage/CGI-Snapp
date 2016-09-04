@@ -10,7 +10,7 @@ LICENSE   => 'artistic_2',
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
 
-WriteMakefile
+my(%params) =
 (
 	($] ge '5.005') ?
 	(
@@ -28,31 +28,62 @@ WriteMakefile
 	},
 	DISTNAME  => 'CGI-Snapp',
 	NAME      => 'CGI::Snapp',
-	LICENSE   => 'artistic_2',
 	PL_FILES  => {},
 	PREREQ_PM =>
 	{
-		'Capture::Tiny' => 0.22,
-		'Carp' => 1.20,
-		'CGI' => 3.63,
-		'CGI::PSGI' => 0.15,
-		'CGI::Simple' => 1.113,
-		'Class::ISA' => 0.36,
-		'Data::Dumper::Concise' => 2.020,
-		'File::Spec' => 3.40,
-		'Hash::FieldHash' => 0.14,
-		'IO::Pipe' => 1.14,
-		'lib' => 0,
-		'Log::Handler' => 0.78,
-		'parent' => 0.225,
-		'Proc::Fork' => 0.802,
-		'strict' => 1.03,
-		'Test::Deep' => 0.110,
-		'Test::More' => 1.001014,
-		'Test::Pod' => 1.48,
-		'Try::Tiny' => 0.16,
-		'vars' => 1.01,
-		'warnings' => 1.03,
+		'Capture::Tiny'			=> 0.44,
+		'Carp'					=> 1.20,
+		'CGI'					=> 3.63,
+		'CGI::PSGI'				=> 0.15,
+		'CGI::Simple'			=> 1.113,
+		'Class::ISA'			=> 0.36,
+		'Data::Dumper::Concise'	=> 2.020,
+		'File::Spec'			=> 3.40,
+		'IO::Pipe'				=> 1.15,
+		'lib'					=> 0,
+		'Log::Handler'			=> 0.88,
+		'Moo'					=> 2.002004,
+		'parent'				=> 0.234,
+		'Proc::Fork'			=> 0.804,
+		'strict'				=> 0,
+		'Try::Tiny'				=> 0.27,
+		'vars'					=> 0,
+		'warnings'				=> 0,
+	},
+	TEST_REQUIRES =>
+	{
+		'Test::Deep'	=> 1.120,
+		'Test::More'	=> 1.302052,
+		'Test::Pod'		=> 1.48,
 	},
 	VERSION_FROM => 'lib/CGI/Snapp.pm',
 );
+
+if ( ($ExtUtils::MakeMaker::VERSION =~ /^\d\.\d\d$/) && ($ExtUtils::MakeMaker::VERSION > 6.30) )
+{
+	$params{LICENSE} = 'perl';
+}
+
+if ($ExtUtils::MakeMaker::VERSION ge '6.46')
+{
+	$params{META_MERGE} =
+	{
+		'meta-spec' =>
+		{
+			version => 2,
+		},
+		resources   =>
+		{
+			bugtracker	=> 'https://rt.cpan.org/Public/Dist/Display.html?Name=CGI-Snapp',
+			license		=> 'http://dev.perl.org/licenses/',
+			repository	=>
+			{
+				type	=> 'git',
+				url		=> 'https://github.com/ronsavage/CGI-Snapp.git',
+				web		=> 'https://github.com/ronsavage/CGI-Snapp',
+			},
+		},
+	};
+}
+
+WriteMakefile(%params);

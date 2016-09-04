@@ -7,28 +7,123 @@ use Carp;
 
 use Class::ISA;
 
-use Hash::FieldHash ':all';
-
 use Log::Handler;
+
+use Moo;
 
 use Try::Tiny;
 
-fieldhash my %_current_run_mode => '_current_run_mode';
-fieldhash my %_error_mode       => '_error_mode';
-fieldhash my %_headers          => '_headers';
-fieldhash my %_header_type      => '_header_type';
-fieldhash my %logger            => 'logger';
-fieldhash my %_object_callbacks => '_object_callbacks';
-fieldhash my %PARAMS            => 'PARAMS';
-fieldhash my %_params           => '_params';
-fieldhash my %_prerun_mode_lock => '_prerun_mode_lock';
-fieldhash my %_psgi             => '_psgi';
-fieldhash my %QUERY             => 'QUERY';
-fieldhash my %_query            => '_query';
-fieldhash my %_run_mode_source  => '_run_mode_source';
-fieldhash my %_run_modes        => '_run_modes';
-fieldhash my %send_output       => 'send_output';
-fieldhash my %_start_mode       => '_start_mode';
+has => _current_run_mode
+(
+	is       => 'rw',
+	default  => sub{return ''},
+	required => 0,
+);
+
+has => _error_mode
+(
+	is       => 'rw',
+	default  => sub{return ''},
+	required => 0,
+);
+
+has => _headers
+(
+	is       => 'rw',
+	default  => sub{return {} },
+	required => 0,
+);
+
+has => _header_type
+(
+	is       => 'rw',
+	default  => sub{return 'header'},
+	required => 0,
+);
+
+has => logger
+(
+	is       => 'rw',
+	default  => sub{return ''},
+	required => 0,
+);
+
+has => _object_callbacks
+(
+	is       => 'rw',
+	default  => sub{return {} },
+	required => 0,
+);
+
+has => PARAMS
+(
+	is       => 'rw',
+	default  => sub{return ''},
+	required => 0,
+);
+
+has => _params
+(
+	is       => 'rw',
+	default  => sub{return {} },
+	required => 0,
+);
+
+has => _prerun_mode_lock
+(
+	is       => 'rw',
+	default  => sub{return 1},
+	required => 0,
+);
+
+has => _psgi
+(
+	is       => 'rw',
+	default  => sub{return 0},
+	required => 0,
+);
+
+has => QUERY
+(
+	is       => 'rw',
+	default  => sub{return ''},
+	required => 0,
+);
+
+has => _query
+(
+	is       => 'rw',
+	default  => sub{return ''},
+	required => 0,
+);
+
+has => _run_mode_source
+(
+	is       => 'rw',
+	default  => sub{return 'rm'} # I.e. the CGI form field of that name.
+	required => 0,
+);
+
+has => _run_modes
+(
+	is       => 'rw',
+	default  => sub{return 'rm'} # I.e. the CGI form field of that name.
+	required => 0,
+);
+
+has => send_output
+(
+	is       => 'rw',
+	default  => sub{return 0}
+	required => 0,
+);
+
+has => _start_mode
+(
+	is       => 'rw',
+	default  => sub{return 'start'}
+	required => 0,
+);
 
 my(%class_callbacks) =
 (
@@ -42,7 +137,7 @@ my(%class_callbacks) =
 
 my($myself);
 
-our $VERSION = '1.08';
+our $VERSION = '1.09';
 
 # --------------------------------------------------
 
@@ -133,6 +228,20 @@ sub add_header
 	return %$old;
 
 } # End of add_header.
+
+# --------------------------------------------------
+
+sub BUILD
+{
+	my($self, $args)	= @_;
+	$myself				= $self;
+
+	$self -> send_output(0) if ($ENV{CGI_SNAPP_RETURN_ONLY});
+	$self -> _run_modes({$self -> _start_mode => 'dump_html'});
+	$self -> call_hook('init', %$args);
+	$self -> setup;
+
+}	# End of BUILD.
 
 # --------------------------------------------------
 
@@ -630,39 +739,6 @@ sub header_type
 
 # --------------------------------------------------
 
-sub _init
-{
-	my($self, $arg)          = @_;
-	$$arg{_current_run_mode} = undef;
-	$$arg{_error_mode}       = '';
-	$$arg{_headers}          = {};
-	$$arg{_header_type}      = 'header';
-	$$arg{logger}            ||= ''; # Caller can set.
-	$$arg{_object_callbacks} = {};
-	$$arg{PARAMS}            ||= ''; # Caller can set.
-	$$arg{_params}           = {};
-	$$arg{_prerun_mode_lock} = 1;
-	$$arg{_psgi}             ||= 0;  # Caller can set.
-	$$arg{QUERY}             ||= ''; # Caller can set.
-	$$arg{_query}            = '';
-	$$arg{_run_mode_source}  = 'rm'; # I.e. the CGI form field of that name.
-	$$arg{_run_modes}        = {};
-	$$arg{send_output}       = defined($$arg{send_output}) ? $$arg{send_output} : 1; # Caller can set.
-	$$arg{_start_mode}       = 'start';
-	$self                    = from_hash($self, $arg);
-	$myself                  = $self;
-
-	$self -> _params($$arg{PARAMS}) if ($$arg{PARAMS} && (ref $$arg{PARAMS} eq 'HASH') );
-	$self -> _query($$arg{QUERY})   if ($$arg{QUERY});
-	$self -> send_output(0)         if ($ENV{CGI_SNAPP_RETURN_ONLY});
-	$self -> _run_modes({$self -> _start_mode => 'dump_html'});
-
-	return $self;
-
-} # End of _init.
-
-# --------------------------------------------------
-
 sub log
 {
 	my($self, $level, $s) = @_;
@@ -727,21 +803,6 @@ sub mode_param
 	return $mode_source;
 
 } # End of mode_param.
-
-# --------------------------------------------------
-
-sub new
-{
-	my($class, %arg) = @_;
-	my($self)        = bless {}, $class;
-	$self            = $self -> _init(\%arg);
-
-	$self -> call_hook('init', %arg);
-	$self -> setup;
-
-	return $self;
-
-}	# End of new.
 
 # --------------------------------------------------
 
@@ -2304,12 +2365,6 @@ Then, later, use the renderer like this (in a View component of the MVC style):
 
 	return JSON::XS -> new -> utf8 -> encode($output);
 
-=head2 This module uses Hash::FieldHash, which has an XS component!
-
-Yep.
-
-My policy is that stand-alone modules should use a light-weight object manager (my choice is L<Hash::FieldHash>), whereas apps can - and probably should - use L<Moose>.
-
 =head2 How does add_header() differ from header_add()?
 
 Firstly, a note about the name of header_add(). It really should have been called add_header() in the first place, just like add_callback().
@@ -2350,7 +2405,7 @@ Yes. Check out L</See Also>.
 
 =head2 How do I sub-class CGI::Snapp?
 
-There is an example in t/lib/CGI/Snapp/SubClass.pm, reproduced here:
+There is an example in t/subclass.pl, which uses t/lib/CGI/Snapp/SubClass.pm. The latter is:
 
 	package CGI::Snapp::SubClass;
 
@@ -2358,22 +2413,16 @@ There is an example in t/lib/CGI/Snapp/SubClass.pm, reproduced here:
 	use strict;
 	use warnings;
 
-	use Hash::FieldHash ':all';
+	use Moo;
 
-	fieldhash my %verbose => 'verbose';
+	has => verbose
+	(
+		is       => 'rw',
+		default  => sub{return 0},
+		required => 0,
+	);
 
-	our $VERSION = '1.00';
-
-	# --------------------------------------------------
-
-	sub _init
-	{
-		my($self, $arg) = @_;
-		$$arg{verbose}  ||= 0; # Caller can set.
-
-		return $self -> SUPER::_init($arg);
-
-	} # End of _init.
+	our $VERSION = '1.08';
 
 	# --------------------------------------------------
 

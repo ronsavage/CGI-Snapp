@@ -4,22 +4,16 @@ use parent 'CGI::Snapp';
 use strict;
 use warnings;
 
-use Hash::FieldHash ':all';
+use Moo;
 
-fieldhash my %verbose => 'verbose';
+has => verbose
+(
+	is       => 'rw',
+	default  => sub{return 0},
+	required => 0,
+);
 
 our $VERSION = '1.08';
-
-# --------------------------------------------------
-
-sub _init
-{
-	my($self, $arg) = @_;
-	$$arg{verbose}  ||= 0; # Caller can set.
-
-	return $self -> SUPER::_init($arg);
-
-} # End of _init.
 
 # --------------------------------------------------
 

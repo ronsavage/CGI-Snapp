@@ -44,4 +44,4 @@
 ^MYMETA.yml$
 ^MYMETA\.json$
 
-^GraphViz2-.*
+^CGI-Snapp-.*

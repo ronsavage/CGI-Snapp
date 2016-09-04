@@ -1,5 +1,15 @@
 Revision history for Perl extension CGI::Snapp.
 
+1.09  2016-09-04T12:10:00
+	- Hash::FieldHash has been replaced by Moo.
+		By default Moo has no XS. And since Hash::FieldHash had an XS component, this switch to Moo
+		may help some users there too.
+		Also note, from the Moo docs: 'If a new enough version of Class::XSAccessor is available,
+		it will be used ...'.
+	- Adopt new repo structure. This includes changing the licence from Artistic to Perl. See
+		http://savage.net.au/Ron/html/My.Workflow.for.Building.Distros.html.
+	- Adopt patch to t/lib/CGI/Snapp/RunScript from twata. See RT#81241. With thanx.
+
 1.08  2013-08-29T17:17:00
 	- Update pre-reqs in general, and in particular for Proc::Fork (0.71 to 0.802).
 		The aim here is to attack the problem Alexandr is having with the tests hanging under MS Windows.

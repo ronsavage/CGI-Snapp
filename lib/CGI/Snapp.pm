@@ -13,112 +13,112 @@ use Moo;
 
 use Try::Tiny;
 
-has => _current_run_mode
+has _current_run_mode =>
 (
 	is       => 'rw',
 	default  => sub{return ''},
 	required => 0,
 );
 
-has => _error_mode
+has _error_mode =>
 (
 	is       => 'rw',
 	default  => sub{return ''},
 	required => 0,
 );
 
-has => _headers
+has _headers =>
 (
 	is       => 'rw',
 	default  => sub{return {} },
 	required => 0,
 );
 
-has => _header_type
+has _header_type =>
 (
 	is       => 'rw',
 	default  => sub{return 'header'},
 	required => 0,
 );
 
-has => logger
+has logger =>
 (
 	is       => 'rw',
 	default  => sub{return ''},
 	required => 0,
 );
 
-has => _object_callbacks
+has _object_callbacks =>
 (
 	is       => 'rw',
 	default  => sub{return {} },
 	required => 0,
 );
 
-has => PARAMS
+has PARAMS =>
 (
 	is       => 'rw',
 	default  => sub{return ''},
 	required => 0,
 );
 
-has => _params
+has _params =>
 (
 	is       => 'rw',
 	default  => sub{return {} },
 	required => 0,
 );
 
-has => _prerun_mode_lock
+has _prerun_mode_lock =>
 (
 	is       => 'rw',
 	default  => sub{return 1},
 	required => 0,
 );
 
-has => _psgi
+has _psgi =>
 (
 	is       => 'rw',
 	default  => sub{return 0},
 	required => 0,
 );
 
-has => QUERY
+has QUERY =>
 (
 	is       => 'rw',
 	default  => sub{return ''},
 	required => 0,
 );
 
-has => _query
+has _query =>
 (
 	is       => 'rw',
 	default  => sub{return ''},
 	required => 0,
 );
 
-has => _run_mode_source
+has _run_mode_source =>
 (
 	is       => 'rw',
 	default  => sub{return 'rm'}, # I.e. the CGI form field of that name.
 	required => 0,,
 );
 
-has => _run_modes
+has _run_modes =>
 (
 	is       => 'rw',
 	default  => sub{return {} },
 	required => 0,
 );
 
-has => send_output
+has send_output =>
 (
 	is       => 'rw',
 	default  => sub{return 0},
 	required => 0,
 );
 
-has => _start_mode
+has _start_mode =>
 (
 	is       => 'rw',
 	default  => sub{return 'start'},

@@ -6,7 +6,7 @@ use warnings;
 
 use Moo;
 
-has => verbose
+has verbose =>
 (
 	is       => 'rw',
 	default  => sub{return 0},

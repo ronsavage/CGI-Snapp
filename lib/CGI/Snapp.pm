@@ -236,22 +236,9 @@ sub BUILD
 	my($self, $args)	= @_;
 	$myself				= $self;
 
-	for my $key (sort keys %$args)
-	{
-		print STDERR "$key => $$args{$key}. \n" if ($key =~ /^(logger|PARAMS|send_output)$/);
-
-		if ($key eq 'PARAMS')
-		{
-			my(%arg1) = %{$$args{PARAMS} };
-
-			for my $key1 (sort keys %arg1)
-			{
-				print STDERR "\t$key1 => $arg1{$key1}. \n";
-			}
-		}
-	}
-
-	$self -> send_output(0) if ($ENV{CGI_SNAPP_RETURN_ONLY});
+	$self -> _params($$args{PARAMS})	if ($$args{PARAMS} && (ref $$args{PARAMS} eq 'HASH') );
+	$self -> _query($$args{QUERY})		if ($$args{QUERY});
+	$self -> send_output(0)				if ($ENV{CGI_SNAPP_RETURN_ONLY});
 	$self -> _run_modes({$self -> _start_mode => 'dump_html'});
 	$self -> call_hook('init', %$args);
 	$self -> setup;

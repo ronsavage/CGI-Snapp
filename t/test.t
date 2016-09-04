@@ -1,3 +1,5 @@
+#!/usr/bin/env perl
+
 use lib 't/lib';
 use strict;
 use warnings;
@@ -50,15 +52,10 @@ my(%test)   =
 	'isa.pl'        =>  1,
 	'overrides.pl'  =>  2,
 	'params.pl'     => 12,
-	'pod.pl'        =>  1, # If Test::Pod is installed. See below.
 	'psgi.basic.pl' =>  4,
 	'run.modes.pl'  => 11,
 	'subclass.pl'   =>  3,
 );
-
-eval "use Test::Pod 1.45";
-
-$test{'pod.pl'} = 0 if ($@);
 
 for my $script (sort keys %test)
 {

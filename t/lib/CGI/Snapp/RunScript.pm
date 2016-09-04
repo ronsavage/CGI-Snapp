@@ -35,14 +35,14 @@ sub run_script
 	{
 		no warnings; # Stops insecure PATH & dependency warnings...
 
-		open PIPE, "-|", $cmd || croak "Pipe died while testing script $script. \n";
+		open(PIPE, "-|", $cmd) || croak "Pipe died while testing script $script. \n";
 
 		while (my $line = <PIPE>)
 		{
 			push @stack, $line;
 		}
 
-		close(PIPE) || croak "Pipe died while closing it. \n";
+		close(PIPE);
 	}
 
 	return [@stack];

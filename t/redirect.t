@@ -1,3 +1,5 @@
+#!/usr/bin/env perl
+
 use lib 't/lib';
 use strict;
 use warnings;
@@ -52,8 +54,6 @@ sub test_b
 {
 	# Test 2. Redirect during prerun phase.
 
-	print STDERR '-' x 50, "\n";
-
 	my($logger) = Log::Handler -> new;
 
 	$logger -> add
@@ -82,8 +82,6 @@ sub test_b
 	my($output) = $app -> run;
 
 	ok($output =~ /first.net.au/, 'redirect(http://first.net.au/) during cgiapp_prerun() worked');
-
-	print STDERR '-' x 50, "\n";
 
 	return 2;
 

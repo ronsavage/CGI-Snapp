@@ -33,7 +33,7 @@ my(%params) =
 	{
 		'Capture::Tiny'			=> 0.44,
 		'Carp'					=> 1.20,
-		'CGI'					=> 3.63,
+		'CGI'					=> 4.32,
 		'CGI::PSGI'				=> 0.15,
 		'CGI::Simple'			=> 1.113,
 		'Class::ISA'			=> 0.36,

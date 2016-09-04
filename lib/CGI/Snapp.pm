@@ -100,14 +100,14 @@ has => _query
 has => _run_mode_source
 (
 	is       => 'rw',
-	default  => sub{return 'rm'} # I.e. the CGI form field of that name.
-	required => 0,
+	default  => sub{return 'rm'}, # I.e. the CGI form field of that name.
+	required => 0,,
 );
 
 has => _run_modes
 (
 	is       => 'rw',
-	default  => sub{return 'rm'} # I.e. the CGI form field of that name.
+	default  => sub{return {} },
 	required => 0,
 );
 

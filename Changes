@@ -1,6 +1,6 @@
 Revision history for Perl extension CGI::Snapp.
 
-1.09  2016-09-04T12:10:00
+2.00  2016-09-04T12:10:00
 	- Hash::FieldHash has been replaced by Moo.
 		By default Moo has no XS. And since Hash::FieldHash had an XS component, this switch to Moo
 		may help some users there too.

@@ -58,7 +58,7 @@ has _object_callbacks =>
 has PARAMS =>
 (
 	is       => 'rw',
-	default  => sub{return ''},
+	default  => sub{return {} },
 	required => 0,
 );
 
@@ -114,7 +114,7 @@ has _run_modes =>
 has send_output =>
 (
 	is       => 'rw',
-	default  => sub{return 0},
+	default  => sub{return 1},
 	required => 0,
 );
 
@@ -137,7 +137,7 @@ my(%class_callbacks) =
 
 my($myself);
 
-our $VERSION = '1.09';
+our $VERSION = '2.00';
 
 # --------------------------------------------------
 
@@ -235,6 +235,21 @@ sub BUILD
 {
 	my($self, $args)	= @_;
 	$myself				= $self;
+
+	for my $key (sort keys %$args)
+	{
+		print STDERR "$key => $$args{$key}. \n" if ($key =~ /^(logger|PARAMS|send_output)$/);
+
+		if ($key eq 'PARAMS')
+		{
+			my(%arg1) = %{$$args{PARAMS} };
+
+			for my $key1 (sort keys %arg1)
+			{
+				print STDERR "\t$key1 => $arg1{$key1}. \n";
+			}
+		}
+	}
 
 	$self -> send_output(0) if ($ENV{CGI_SNAPP_RETURN_ONLY});
 	$self -> _run_modes({$self -> _start_mode => 'dump_html'});

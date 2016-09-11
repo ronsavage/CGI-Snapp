@@ -28,7 +28,7 @@ sub new
 sub run_script
 {
 	my($self, $script)	= @_;
-	my($cmd)			= "$^X $script";
+	my($cmd)			= "$^X -Ilib $script";
 
 	my(@stack);
 

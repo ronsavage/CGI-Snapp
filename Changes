@@ -1,5 +1,15 @@
 Revision history for Perl extension CGI::Snapp.
 
+2.01  2016-09-11T11:01:00
+	- Add the directory of the new version of CGI::Snapp (i.e. ./lib) to the @INC used by
+		"$^X $script" (in t/lib/CGI/Snapp/RunScript.pm) by changing that string to
+		"$^X -Ilib $script". This stops the tests defaulting to any version of CGI::Snapp
+		already installed, and thus forces all tests run by t/test.t to use this new version.
+		I found this issue by eventually noticing that in my conversion from Hash::FieldHash to
+		Moo I had installed a faulty copy of CGI::Snapp whose default value of send_output was
+		0 instead of 1. Only by deleting the installed version and manually running some tests
+		both via 'prove -lv ...' and via 'perl -Ilib ...' did I find the typo.
+
 2.00  2016-09-04T12:10:00
 	- Hash::FieldHash has been replaced by Moo.
 		By default Moo has no XS. And since Hash::FieldHash had an XS component, this switch to Moo

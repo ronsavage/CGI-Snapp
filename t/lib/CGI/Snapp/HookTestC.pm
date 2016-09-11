@@ -13,7 +13,7 @@ use CGI::Snapp::Plugin::HookTest1;
 use CGI::Snapp::Plugin::HookTest2;
 use CGI::Snapp::Plugin::HookTest::HookTest3;
 
-our $VERSION = '2.00';
+our $VERSION = '2.01';
 
 # --------------------------------------------------
 

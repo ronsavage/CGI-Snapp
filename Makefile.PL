@@ -5,8 +5,6 @@ use ExtUtils::MakeMaker;
 
 # ----------------
 
-LICENSE   => 'artistic_2',
-
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
 
